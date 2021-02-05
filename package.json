@@ -1,7 +1,6 @@
 {
   "name": "@spwashi/react-d3",
   "version": "0.0.1",
-  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -25,7 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepublish": "npm run build;"
   },
   "eslintConfig": {
     "extends": [
