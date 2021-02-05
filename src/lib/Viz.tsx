@@ -1,7 +1,8 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {ForceConfiguration, useSimulation} from './useSimulation';
+import {useSimulation} from './useSimulation';
 import {Height, ViewBox, Width} from './viz.types';
 import {Datum, LinkDefinition} from './data.types';
+import {ForceConfiguration} from './useSimulation.types';
 
 type VizParams = {
     data: Datum[],

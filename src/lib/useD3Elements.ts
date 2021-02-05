@@ -3,8 +3,8 @@ import * as d3 from 'd3';
 import {ValueFn} from 'd3';
 import {useCallback, useMemo} from 'react';
 import {d_selectRadius, d_selectX, d_selectY, getDataFillFn} from './data';
-import {ForceConfiguration} from './useSimulation';
 import {Definition} from './useD3RootSvg.types';
+import {ForceConfiguration} from './useSimulation.types';
 
 type L = { source: Datum, target: Datum };
 

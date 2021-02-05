@@ -5,31 +5,16 @@ import {ViewBox} from './viz.types';
 import {Datum, SvgCircleSelection, SvgLineSelection} from './data.types';
 import {Information, Style, useD3Elements} from './useD3Elements';
 import {getFn_updateLinkLineElementWhenDragged} from './getLinkDraggingFunction';
+import {ForceConfiguration, NDimensionalTuple_2} from './useSimulation.types';
 
-////////////////////
-/**
- * Types
- */
-export interface ForceConfiguration {
-    boundingBox?: boolean;
-    nodeForceStrength: number;
-    center?: number;
-    nodeLinkStrength: number
-}
-
-type NDimensionalTuple_2 = [number, number];
-
-////////////////////
 /**
  * Selectors
  */
-
 /**
  * Simulation Width
  * @param offset
  */
-const o_Width = (offset: ViewBox) => offset[2];
-
+const o_Width  = (offset: ViewBox) => offset[2];
 /**
  * Simulation Height
  * @param offset
@@ -37,7 +22,7 @@ const o_Width = (offset: ViewBox) => offset[2];
 const o_Height = (offset: ViewBox) => offset[3];
 
 
-///////////////////////////////
+////////////////////
 /**
  * Export
  */

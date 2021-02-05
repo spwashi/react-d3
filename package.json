@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rm -rf dist; tsc",
+    "build": "rm -rf dist; tsc --noEmit false",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepublish": "npm run build;"
