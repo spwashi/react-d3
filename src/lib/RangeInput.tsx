@@ -4,7 +4,7 @@ export function RangeInput(
     {step = 1, title, max = 5, min = 0, controller: [value, setValue]}:
         { title?: string, min?: number, max?: number, step?: number, controller: [number, (n: number) => any] },
 ) {
-    const bottom   = '10px';
+    const bottom   = '5px';
     const inputRef = React.createRef<HTMLDivElement>();
     useEffect(
         () => {
@@ -32,14 +32,14 @@ export function RangeInput(
         <div
             ref={inputRef}
             style={{
-                borderBottom:  'thin solid rgba(255, 255, 255, .3)',
+                borderBottom:  'thin solid rgba(255, 255, 255, .1)',
                 paddingBottom: bottom,
                 paddingTop:    bottom,
                 position:      'relative',
                 fontSize:      '10px',
                 width:         width + 'px',
             }}>
-            <div style={{display: 'flex', flexDirection: 'column', fontSize: '10px', alignItems: 'center'}}>
+            <div style={{display: 'flex', flexDirection: 'column', fontSize: '10px', alignItems: 'flex-start'}}>
                 <div style={{
                     height:        '100%',
                     width:         (width * Math.abs(percentage)) + 'px',
@@ -47,7 +47,7 @@ export function RangeInput(
                     top:           0,
                     pointerEvents: 'none',
                     background:    value > 0 ? 'white' : 'red',
-                    opacity:       .3,
+                    opacity:       .1,
                 }}/>
                 <strong onClick={e => setO(!o)}>{title}</strong>
                 {

@@ -33,12 +33,12 @@
     margin: 0 2rem;
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .input-wrapper {
-    padding: 1rem;
-    flex: 0 0 30%;
+    padding: 0 1rem;
+    flex: 0 1;
 }
 
 .input-wrapper input {
@@ -48,13 +48,4 @@
 .number {
     font-size: 15px;
     width: 100px;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
 }

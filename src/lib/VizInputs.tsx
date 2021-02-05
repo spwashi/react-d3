@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Height, PixelMeasurement, Width} from './viz.types';
 import {RangeInput} from './RangeInput';
 import {useLocalStorage} from './util/useLocalStorage';
@@ -32,8 +32,11 @@ export function VizInputs() {
                                                                 400);
     const [theta, setTheta]                   = useLocalStorage('viz::theta',
                                                                 2.99);
+    const [boundingBox, setBoundingBox]       = useLocalStorage('viz::boundingBox',
+                                                                0);
     const [centeringForce, setCenteringForce] = useLocalStorage('viz::center',
                                                                 0);
+    const [open, setOpen]                     = useState(false)
     let InputToggles                          =
             <div className="input-wrapper" key={'inputs'}
                  style={{
@@ -41,95 +44,106 @@ export function VizInputs() {
                      display:       'flex',
                      flexDirection: 'column',
                      alignItems:    'center',
-                     position:      'fixed',
-                     left:          0,
                      top:           0,
+                     left:          0,
                  }}>
-                <RangeInput title={'Radius'}
-                            controller={[radius, setRadius]}
-                            step={1}
-                            min={1}
-                            max={2000}/>
-                <RangeInput title={'Link Strength'}
-                            controller={[linkStrength, setLinkStrength]}
-                            step={1}
-                            min={-10000}
-                            max={10000}/>
-                <RangeInput title={'Node Strength'}
-                            controller={[nodeStrength, setNodeStrength]}
-                            step={1}
-                            min={-1000}
-                            max={1000}/>
-                <RangeInput title={'Radial Decay'}
-                            controller={[radialDecay, setRadialDecay]}
-                            step={1}
-                            min={-1000}
-                            max={1000}
-                />
-                <RangeInput title={'Height'}
-                            controller={[height, setHeight]}
-                            step={.1}
-                            max={5000}
-                />
-                <RangeInput title={'Width'}
-                            controller={[width, setWidth]}
-                            step={.1}
-                            max={5000}
-                />
-                <RangeInput title={'Svg Width'} controller={[svgWidth, setSvgWidth]}
-                            step={.1}
-                            min={0}
-                            max={10000}
-                />
-                <RangeInput title={'Svg Height'}
-                            controller={[svgHeight, setSvgHeight]}
-                            step={.1}
-                            min={0}
-                            max={10000}
-                />
-                <RangeInput title={'OffsetX'}
-                            controller={[offsetX, setOffsetX]}
-                            step={.1}
-                            min={-10000}
-                            max={1000}
-                />
-                <RangeInput title={'OffsetY'}
-                            controller={[offsetY, setOffsetY]}
-                            step={.1}
-                            min={-10000}
-                            max={10000}
-                />
-                <RangeInput title={'Steps'}
-                            controller={[steps, setSteps]}
-                            step={1}
-                            min={0}
-                            max={100000}
-                />
-                <RangeInput title={'Count'}
-                            controller={[count, setCount]}
-                            step={1}
-                            min={3}
-                            max={5000}
-                />
-                <RangeInput title={'Colors Count'}
-                            controller={[colorsCount, setColorsCount]}
-                            step={1}
-                            min={1}
-                            max={Math.max(count * 12, 1000)}
-                />
-                <RangeInput title={'Theta'}
-                            controller={[theta, setTheta]}
-                            step={.1}
-                            min={-1000}
-                            max={1000}
-                />
-                <RangeInput title={'Centering Force'}
-                            controller={[centeringForce, setCenteringForce]}
-                            step={1}
-                            min={0}
-                            max={1}
-                />
-            </div>;
+                <button onClick={e => setOpen(!open)}>{open ? 'close' : 'edit'}</button>
+                {
+                    open ? (<>
+                            <RangeInput title={'Radius'}
+                                        controller={[radius, setRadius]}
+                                        step={1}
+                                        min={1}
+                                        max={2000}/>
+                            <RangeInput title={'Link Strength'}
+                                        controller={[linkStrength, setLinkStrength]}
+                                        step={1}
+                                        min={-10000}
+                                        max={10000}/>
+                            <RangeInput title={'Node Strength'}
+                                        controller={[nodeStrength, setNodeStrength]}
+                                        step={1}
+                                        min={-1000}
+                                        max={1000}/>
+                            <RangeInput title={'Radial Decay'}
+                                        controller={[radialDecay, setRadialDecay]}
+                                        step={1}
+                                        min={-1000}
+                                        max={1000}
+                            />
+                            <RangeInput title={'Height'}
+                                        controller={[height, setHeight]}
+                                        step={.1}
+                                        max={5000}
+                            />
+                            <RangeInput title={'Width'}
+                                        controller={[width, setWidth]}
+                                        step={.1}
+                                        max={5000}
+                            />
+                            <RangeInput title={'Svg Width'} controller={[svgWidth, setSvgWidth]}
+                                        step={.1}
+                                        min={0}
+                                        max={10000}
+                            />
+                            <RangeInput title={'Svg Height'}
+                                        controller={[svgHeight, setSvgHeight]}
+                                        step={.1}
+                                        min={0}
+                                        max={10000}
+                            />
+                            <RangeInput title={'OffsetX'}
+                                        controller={[offsetX, setOffsetX]}
+                                        step={.1}
+                                        min={-10000}
+                                        max={1000}
+                            />
+                            <RangeInput title={'OffsetY'}
+                                        controller={[offsetY, setOffsetY]}
+                                        step={.1}
+                                        min={-10000}
+                                        max={10000}
+                            />
+                            <RangeInput title={'Steps'}
+                                        controller={[steps, setSteps]}
+                                        step={1}
+                                        min={0}
+                                        max={100000}
+                            />
+                            <RangeInput title={'Count'}
+                                        controller={[count, setCount]}
+                                        step={1}
+                                        min={3}
+                                        max={5000}
+                            />
+                            <RangeInput title={'Colors Count'}
+                                        controller={[colorsCount, setColorsCount]}
+                                        step={1}
+                                        min={1}
+                                        max={Math.max(count * 12, 1000)}
+                            />
+                            <RangeInput title={'Theta'}
+                                        controller={[theta, setTheta]}
+                                        step={.1}
+                                        min={-1000}
+                                        max={1000}
+                            />
+                            <RangeInput title={'Centering Force'}
+                                        controller={[centeringForce, setCenteringForce]}
+                                        step={1}
+                                        min={0}
+                                        max={100}
+                            />
+                            <RangeInput title={'Bounding Box'}
+                                        controller={[boundingBox, setBoundingBox]}
+                                        step={1}
+                                        min={0}
+                                        max={1}
+                            />
+                        </>
+                    ) : null
+                }
+            </div>
     return {
         props:     {
             linkStrength: linkStrength / 10000,
@@ -147,6 +161,7 @@ export function VizInputs() {
             count,
             colorsCount,
             theta,
+            boundingBox
         },
         Component: InputToggles,
     };

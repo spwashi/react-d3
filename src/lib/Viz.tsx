@@ -1,12 +1,12 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {SimSettings, useSimulation} from './useSimulation';
+import {ForceConfiguration, useSimulation} from './useSimulation';
 import {Height, ViewBox, Width} from './viz.types';
 import {Datum, LinkDefinition} from './data.types';
 
 type VizParams = {
     data: Datum[],
     links: LinkDefinition[],
-    forces?: { center?: boolean };
+    forces?: { center?: boolean; nodeForceStrength?: number; nodeLinkStrength?: number; boundingBox?: boolean };
     svgHeight?: number,
     svgWidth?: number,
     strength?: number,
@@ -17,8 +17,6 @@ type VizParams = {
     width?: number,
     height?: number,
     colorsCount?: number,
-    linkStrength?: number,
-    nodeStrength?: number,
 };
 
 export function Viz(props: VizParams) {
@@ -31,8 +29,8 @@ export function Viz(props: VizParams) {
     const radius: number          = props.radius || 1;
     const radialDecay: number     = props.radialDecay || 1;
     const colors                  = props.colorsCount || 360;
-    const linkStrength            = props.linkStrength || 0;
-    const nodeStrength            = props.nodeStrength || 0;
+    const nodeStrength            = props.forces?.nodeForceStrength;
+    const linkStrength            = props.forces?.nodeLinkStrength;
 
     const viewBox: ViewBox =
               [
@@ -45,19 +43,17 @@ export function Viz(props: VizParams) {
     let simSettings        = useMemo(() => {
                                          // return undefined;
                                          return ({
-                                             nodeForceStrength: nodeStrength,
-                                             center:            (props.forces?.center ?? true) ? [width / 2, height / 2] : undefined,
+                                             boundingBox:       props.forces?.boundingBox ?? true,
+                                             nodeForceStrength: nodeStrength ?? 0,
+                                             center:            props.forces?.center,
                                              nodeLinkStrength:  linkStrength,
-                                         } as SimSettings)
+                                         } as ForceConfiguration)
                                      },
                                      [nodeStrength, width, height, linkStrength],
     );
     const sim              =
               useSimulation(
-                  viewBox,
-                  {data, links},
-                  {radius, radialDecay, colors, animation: 'random'},
-                  props.forces ? simSettings : undefined,
+                  {offset : viewBox, information : {data, links}, style : {radius, radialDecay, colors, animation: 'random'}, simSettings : props.forces ? simSettings : undefined},
               );
     const simSettingSpread = [
         simSettings?.nodeForceStrength,

@@ -1,8 +1,6 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import './App.css';
-import {Viz} from './lib';
-import {useData} from './lib';
-import {VizInputs} from './lib';
+import {useData, Viz, VizInputs} from './lib';
 
 function App() {
     let {
@@ -26,6 +24,7 @@ function App() {
               centeringForce,
               svgWidth,
               svgHeight,
+              boundingBox,
           } = props;
 
     const svgSize  = {width: svgWidth, height: svgHeight};
@@ -41,12 +40,13 @@ function App() {
                 <div style={{width: '50%'}}>
                     <Viz
                         forces={{
-                            center: !!centeringForce,
+                            boundingBox:       !!boundingBox,
+                            center:            !!centeringForce,
+                            nodeForceStrength: nodeStrength,
+                            nodeLinkStrength:  linkStrength,
                         }}
                         data={data}
                         links={links}
-                        nodeStrength={nodeStrength}
-                        linkStrength={linkStrength}
                         radius={radius}
                         radialDecay={radialDecay}
                         colorsCount={colorsCount}
