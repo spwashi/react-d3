@@ -22,10 +22,17 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf dist; tsc --outDir dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepublish": "npm run build;"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [ "dist", "README.md" ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spwashi/react-d3"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +53,7 @@
     ]
   },
   "devDependencies": {
-    "@types/d3": "^6.2.0"
+    "@types/d3": "^6.2.0",
+    "babel-cli": "^6.26.0"
   }
 }
