@@ -1,3 +1,3 @@
-export {useData} from './data';
-export {VizInputs as ReactD3VizInputs} from './VizInputs';
-
+export {useData}   from './data';
+export {VizInputs} from './VizInputs';
+export {Viz}       from './Viz';
