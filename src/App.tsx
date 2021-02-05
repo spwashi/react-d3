@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import './App.css';
-import {Viz} from './lib/Viz';
+import {Viz} from './lib';
 import {useData} from './lib';
-import {VizInputs} from './lib/VizInputs';
+import {VizInputs} from './lib';
 
 function App() {
     let {
