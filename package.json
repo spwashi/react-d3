@@ -1,6 +1,6 @@
 {
   "name": "@spwashi/react-d3",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -31,10 +31,6 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "files": [
-    "dist",
-    "README.md"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/spwashi/react-d3"
