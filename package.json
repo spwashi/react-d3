@@ -22,10 +22,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rm -rf dist; tsc --noEmit false",
+    "build": "tsc --noEmit false",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepublish": "npm run build;"
+    "copypackage": "cp -rf package.json dist",
+    "prepare": "yarn run build",
+    "postpublish": "cd dist || true; cp -rf package.json ../"
   },
   "main": "dist/index.js",
   "module": "dist/index.js",
