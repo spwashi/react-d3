@@ -57,7 +57,7 @@ export function VizInputs() {
                                         max={10000}/>
                             <RangeInput title={'Centering Force'}
                                         controller={[centeringForce, setCenteringForce]}
-                                        step={1}
+                                        step={.5}
                                         min={-10000}
                                         max={10000}/>
                             <RangeInput title={'Bounding Box'}

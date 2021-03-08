@@ -100,6 +100,22 @@ export function updateForces<F>(forces: ForceConfiguration | undefined,
                                                         const maxY  = (height + yOffset) - radius;
                                                         const minY  = yOffset + radius;
                                                         curr_node.y = Math.max(minY, Math.min(maxY, y));
+
+                                                        const smallest_x = curr_node?.forces?.boundary?.smallest?.x;
+                                                        const largest_x  = curr_node?.forces?.boundary?.largest?.x;
+                                                        if ((smallest_x ?? false) && (curr_node.x < smallest_x)) {
+                                                            curr_node.x = smallest_x;
+                                                        } else if ((largest_x ?? false) && (curr_node.x > largest_x)) {
+                                                            curr_node.x = largest_x;
+                                                        }
+
+                                                        const smallest_y = curr_node?.forces?.boundary?.smallest?.y;
+                                                        const largest_y  = curr_node?.forces?.boundary?.largest?.y;
+                                                        if ((smallest_y ?? false) && (curr_node.y < smallest_y)) {
+                                                            curr_node.y = smallest_y;
+                                                        } else if ((largest_y ?? false) && (curr_node.y > largest_y)) {
+                                                            curr_node.y = largest_y;
+                                                        }
                                                     }
                                                 })
             }
