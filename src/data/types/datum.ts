@@ -12,6 +12,9 @@ export type Datum =
         fx?: X,
         fy?: Y,
 
+        vx?: X,
+        vy?: Y,
+
         _fx?: X,
         _fy?: Y,
 

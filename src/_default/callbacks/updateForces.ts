@@ -180,17 +180,21 @@ export function updateForces<F>(forces: ForceConfiguration | undefined,
                                             const smallest_x = curr_node?.forces?.boundary?.smallest?.x;
                                             const largest_x  = curr_node?.forces?.boundary?.largest?.x;
                                             if (typeof smallest_x !== 'undefined' && (curr_node.x < smallest_x)) {
-                                                curr_node.x = smallest_x;
+                                                curr_node.vx = 0;
+                                                curr_node.x  = smallest_x;
                                             } else if (typeof largest_x !== 'undefined' && (curr_node.x > largest_x)) {
-                                                curr_node.x = largest_x;
+                                                curr_node.vx = 0;
+                                                curr_node.x  = largest_x;
                                             }
 
                                             const smallest_y = curr_node?.forces?.boundary?.smallest?.y;
                                             const largest_y  = curr_node?.forces?.boundary?.largest?.y;
                                             if (typeof smallest_y !== 'undefined' && (curr_node.y < smallest_y)) {
-                                                curr_node.y = smallest_y;
+                                                curr_node.vy = 0;
+                                                curr_node.y  = smallest_y;
                                             } else if (typeof largest_y !== 'undefined' && (curr_node.y > largest_y)) {
-                                                curr_node.y = largest_y;
+                                                curr_node.vy = 0;
+                                                curr_node.y  = largest_y;
                                             }
                                         }
                                     })
