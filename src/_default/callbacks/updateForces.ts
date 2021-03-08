@@ -172,7 +172,7 @@ export function updateForces<F>(forces: ForceConfiguration | undefined,
     }
 
     _simulation = _simulation.force('corrective',
-                                    function inclusiveBoundingBox() {
+                                    function correctiveForce() {
                                         let i = 0, n = data.nodes.length;
 
                                         for (; i < n; ++i) {
