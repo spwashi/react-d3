@@ -103,17 +103,17 @@ export function updateForces<F>(forces: ForceConfiguration | undefined,
 
                                                         const smallest_x = curr_node?.forces?.boundary?.smallest?.x;
                                                         const largest_x  = curr_node?.forces?.boundary?.largest?.x;
-                                                        if ((smallest_x ?? false) && (curr_node.x < smallest_x)) {
+                                                        if (typeof smallest_x !== 'undefined' && (curr_node.x < smallest_x)) {
                                                             curr_node.x = smallest_x;
-                                                        } else if ((largest_x ?? false) && (curr_node.x > largest_x)) {
+                                                        } else if (typeof largest_x !== 'undefined' && (curr_node.x > largest_x)) {
                                                             curr_node.x = largest_x;
                                                         }
 
                                                         const smallest_y = curr_node?.forces?.boundary?.smallest?.y;
                                                         const largest_y  = curr_node?.forces?.boundary?.largest?.y;
-                                                        if ((smallest_y ?? false) && (curr_node.y < smallest_y)) {
+                                                        if (typeof smallest_y !== 'undefined' && (curr_node.y < smallest_y)) {
                                                             curr_node.y = smallest_y;
-                                                        } else if ((largest_y ?? false) && (curr_node.y > largest_y)) {
+                                                        } else if (typeof largest_y !== 'undefined' && (curr_node.y > largest_y)) {
                                                             curr_node.y = largest_y;
                                                         }
                                                     }
