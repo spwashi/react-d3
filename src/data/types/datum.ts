@@ -23,16 +23,10 @@ export type Datum =
         dragBehavior?: { savePos?: boolean },
         radiusMultiplier?: number,
 
-        forces: {
-            boundary: {
-                smallest: {
-                    x: number,
-                    y: number
-                },
-                largest: {
-                    x: number,
-                    y: number
-                }
+        forces?: {
+            boundary?: {
+                smallest?: { x?: number, y?: number },
+                largest?: { x?: number, y?: number }
             }
         },
 
