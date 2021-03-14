@@ -4,9 +4,9 @@ import {D3EdgeSelection, D3NodeSelection} from '../../data/data.types';
 import {drag as d3drag} from 'd3';
 import {dragged} from '../../util/dragged';
 import {_Simulation} from '../types';
-import {SimulationData} from '../hooks/types';
+import {SimulationData} from '../hooks/types/types';
 
-export function tick(root: SimulationRoot, data: SimulationData, simulation: _Simulation) {
+export function simTick(root: SimulationRoot, data: SimulationData, simulation: _Simulation) {
     /* initialize components */
     const {edges, nodes} = simulationRoot_componentManagers(root);
 
@@ -36,9 +36,6 @@ export function tick(root: SimulationRoot, data: SimulationData, simulation: _Si
     // update components
     {
         edges.format(svg);
-        // @ts-ignore
-        const drag = d3drag().on('drag', dragged);
-        nodes.selection(svg).selectAll('.node-wrapper').call(drag);
         nodes.format(svg, simulation);
     }
 }

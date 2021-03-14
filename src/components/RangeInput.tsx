@@ -1,5 +1,40 @@
 import React, {useEffect, useState} from 'react';
 
+function RangeInputValue({value, setValue}: { value: number, setValue: (v: number) => void }) {
+    const [mode, setMode]             = useState('view');
+    const [inputValue, setInputValue] = useState<number | null>(null);
+
+    function toggle() {
+        setMode(mode === 'view' ? 'edit' : 'view');
+    }
+    const onSubmit = () => inputValue && (setValue(inputValue), setInputValue(null), toggle());
+
+    return (
+        <span style={{position: 'absolute', right: 0}}>{
+            mode === 'view'
+            ? <span onClick={() => { toggle(); }}>{Math.trunc(value)}</span>
+            : (
+                <input
+                    style={{
+                        background: 'inherit',
+                        textAlign:  'right',
+                        border:     'rgba(255,255,255, .3)',
+                        padding:    'none',
+                        display:    'none',
+                        color:      'inherit',
+                    }}
+                    type="text"
+                    value={inputValue ?? value}
+                    onChange={e => {
+                        const number = parseInt(e.target.value);
+                        if (isNaN(number)) return;
+                        setInputValue(number)
+                    }}
+                    onBlur={onSubmit}/>
+            )
+        }</span>
+    );
+}
 export function RangeInput(
     {step = 1, title, max = 5, min = 0, controller: [value, setValue]}:
         { title?: string, min?: number, max?: number, step?: number, controller: [number, (n: number) => any] },
@@ -53,7 +88,8 @@ export function RangeInput(
                     opacity: negative ? .3 : .1,
                 }}/>
                 <strong>{title}</strong>
-                <span style={{position: 'absolute', right: 0}}>{`${Math.trunc(value)}`}</span></div>
+                {<RangeInputValue value={value} setValue={setValue}/>}
+            </div>
         </div>
     );
 }

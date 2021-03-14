@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef} from 'react';
 import {Height, ViewBox, Width} from '../viz.types';
 import {DatumEdge} from '../data/data.types';
 import {ForceConfiguration} from '../hooks/useSimulation.types';
-import {useSimulation} from '../hooks/simulation/useSimulation';
+import {useSimulation} from '../simulation/hooks/useSimulation';
 import {Datum} from '../data/types/datum';
 
 type VizParams = {
@@ -35,13 +35,10 @@ export function Viz(props: VizParams) {
     const nodeStrength       = props.forces?.nodeForceStrength;
     const linkStrength       = props.forces?.nodeLinkStrength;
 
-    const viewBox: ViewBox =
-              [
-                  props.offsetX || 0,
-                  props.offsetY || 0,
-                  props.svgWidth || 100,
-                  props.svgHeight || 100,
-              ];
+    const viewBox: ViewBox = useMemo(() => [props.offsetX ?? 0, props.offsetY ?? 0,
+                                            (props.svgWidth ?? 100) || 1, (props.svgHeight ?? 100) || 1],
+                                     [props.offsetX, props.offsetY, props.svgWidth, props.svgHeight])
+    ;
 
     const forces           = useMemo(() => {
                                          // return undefined;

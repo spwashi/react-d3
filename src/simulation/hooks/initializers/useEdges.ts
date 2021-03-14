@@ -1,11 +1,11 @@
-import {SimulationData} from '../types';
+import {SimulationData} from '../types/types';
 import {ForceConfiguration} from '../../../hooks/useSimulation.types';
 import {D3EdgeSelection, SvgSelection} from '../../../data/data.types';
 import {ValueFn} from 'd3';
 import {ComponentManager} from '../../../hooks/simulation.types';
 import {Datum} from '../../../data/types/datum';
 
-export function initEdges(information: SimulationData, forces?: ForceConfiguration): ComponentManager<D3EdgeSelection> {
+export function useEdges(information: SimulationData, forces?: ForceConfiguration): ComponentManager<D3EdgeSelection> {
     type L = { source: Datum, target: Datum };
     type GenericValueFn = ValueFn<any, any, any>;
     return {

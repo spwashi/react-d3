@@ -1,8 +1,10 @@
 import {Index, Radius, X, Y} from '../data.types';
+import {D3DragEvent} from 'd3';
 
 export type Datum =
     {
-        color: string;
+        color?: string;
+        stroke?: string;
 
         x: X,
         y: Y,
@@ -23,16 +25,21 @@ export type Datum =
         i?: Index,
 
         description?: { title?: string },
-        dragBehavior?: { savePos?: boolean },
+        dragBehavior?: {
+            savePos?: boolean;
+            drag?: (event: D3DragEvent<any, any, any>, d: Datum) => void
+            release?: (event: D3DragEvent<any, any, any>, d: Datum) => void
+        },
         radiusMultiplier?: number,
 
         forces?: {
+            electronegativity?: number;
             boundary?: {
-                smallest?: { x?: number, y?: number },
-                largest?: { x?: number, y?: number }
+                smallest?: { x?: () => void, y?: () => void },
+                largest?: { x?: () => void, y?: () => void }
             }
         },
 
         reset?: () => void;
-        log?: () => void;
+        click?: (event?: MouseEvent | any) => void;
     };

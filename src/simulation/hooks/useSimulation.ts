@@ -1,13 +1,13 @@
 import {Simulation} from 'd3';
 import {useCallback, useEffect, useState} from 'react';
-import {initSvgComponents} from '../../_default/hooks/initSvgComponents';
-import {useD3RootSvg} from '../useD3RootSvg';
-import {ForceConfiguration} from '../useSimulation.types';
+import {useSvgComponents} from './useSvgComponents';
+import {useD3RootSvg} from '../../hooks/useD3RootSvg';
+import {ForceConfiguration} from '../../hooks/useSimulation.types';
 import {ViewBox} from '../../viz.types';
-import {updateForces} from '../../_default/callbacks/updateForces';
-import {tick} from '../../_default/callbacks/tick';
-import {setupSimulationRoot} from '../../_default/callbacks/setupSimulationRoot';
-import {SimulationData, Style} from '../../_default/hooks/types';
+import {simForces} from '../callbacks/forces';
+import {simTick} from '../callbacks/tick';
+import {initSimulationRoot} from '../callbacks/init';
+import {SimulationData, Style} from './types/types';
 
 ////////////////////
 
@@ -34,15 +34,15 @@ interface SimulationParameters {
  * @param style
  * @param simSettings
  */
-export function useSimulation({offset, data, style, forces}: SimulationParameters) {
-    const components           = initSvgComponents(data, forces);
+export function useSimulation({offset, data, style, forces: forceSettings}: SimulationParameters) {
+    const components           = useSvgComponents(data, forceSettings);
     const simRoot              = useD3RootSvg({offset, data, components});
     const simulationController = useState<Simulation<any, any>>();
     const [simulation]         = simulationController;
 
     // Stylize the SVG
     {
-        useEffect(() => setupSimulationRoot(simRoot, offset), [offset]);
+        useEffect(() => initSimulationRoot(simRoot, offset), [offset]);
     }
 
     // Setup the Force simulation
@@ -50,16 +50,17 @@ export function useSimulation({offset, data, style, forces}: SimulationParameter
         const deps = [data.nodes,
                       data.edges,
                       style.radius,
-                      forces];
+                      forceSettings,
+                      offset];
 
-        const update     = useCallback(() => tick(simRoot, data, simulation), deps);
-        const makeForces = useCallback(() => updateForces(forces, data, offset, update, simulationController), deps);
+        const update     = useCallback(() => simTick(simRoot, data, simulation), deps);
+        const makeForces = useCallback(() => simForces(forceSettings, data, offset, update, simulationController), deps);
         useEffect(makeForces, deps);
     }
 
     // Reheat the simulation
     {
-        useEffect(() => { simulation?.alphaTarget(.9).restart(); }, [forces, !!simulation])
+        useEffect(() => { simulation?.alphaTarget(1).restart(); }, [forceSettings, !!simulation, offset])
     }
     return simRoot.svg ? simRoot.svg.node() : null;
 }

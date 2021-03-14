@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Height, PixelMeasurement, Width} from '../viz.types';
 import {RangeInput} from './RangeInput';
-import {useLocalStorage} from '../util/useLocalStorage';
+import {useLocalStorage} from '../hooks/useLocalStorage';
 
 export function VizInputs() {
     const [radius, setRadius]                 = useLocalStorage('viz::radius',
@@ -44,7 +44,7 @@ export function VizInputs() {
                                         controller={[radius, setRadius]}
                                         step={.5}
                                         min={1}
-                                        max={100000}/>
+                                        max={1000}/>
                             <RangeInput title={'Link Strength'}
                                         controller={[linkStrength, setLinkStrength]}
                                         step={1}
@@ -57,7 +57,7 @@ export function VizInputs() {
                                         max={10000}/>
                             <RangeInput title={'Centering Force'}
                                         controller={[centeringForce, setCenteringForce]}
-                                        step={.5}
+                                        step={.1}
                                         min={-10000}
                                         max={10000}/>
                             <RangeInput title={'Bounding Box'}

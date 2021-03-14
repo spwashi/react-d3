@@ -7,16 +7,13 @@ import {Datum} from '../data/types/datum';
  * @param d
  */
 export function dragged(this: Element, event: D3DragEvent<any, any, any>, d: Datum) {
+    const drag = d?.dragBehavior?.drag;
+    if(drag) return drag(event, d);
+
     const x = d._fx ?? event.x;
     const y = d._fy ?? event.y;
-    console.clear();
-    console.log(event);
-    if (event.sourceEvent?.shiftKey) {
-        d.x = x;
-        d.y = y;
-    } else {
-        d.fx = x;
-        d.fy = y;
-    }
+
+    d.fx = x;
+    d.fy = y;
 }
 

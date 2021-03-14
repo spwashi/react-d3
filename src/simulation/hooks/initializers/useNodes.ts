@@ -1,14 +1,20 @@
-import {D3DragEvent, Simulation} from 'd3';
+import {drag as d3drag, Simulation} from 'd3';
 import {D3NodeLabelSelection, D3NodeSelection, SvgSelection} from '../../../data/data.types';
 import {NodeComponentManager} from '../../../hooks/simulation.types';
-import {SimulationData} from '../types';
+import {SimulationData} from '../types/types';
 import {Datum} from '../../../data/types/datum';
+import {dragged} from '../../../util/dragged';
+import {useContext} from 'react';
+import {SimulationContext} from '../../context/context';
 
 export const d_selectX      = (d: Datum | undefined) => d?.x ?? null;
 export const d_selectY      = (d: Datum | undefined) => d?.y ?? null;
 export const d_selectRadius = (d: Datum | undefined) => d?.r || 1;
 
-export function initSvgNodes(data: SimulationData): NodeComponentManager {
+
+export function useNodes(data: SimulationData): NodeComponentManager {
+    const simulationContext = useContext(SimulationContext);
+
     return {
         data: data.nodes,
         initComponent(svg: SvgSelection) {
@@ -23,8 +29,8 @@ export function initSvgNodes(data: SimulationData): NodeComponentManager {
                                                .style('stroke', 'white');
             s_nodeWrapper.style('fill', 'white')
                          .append('text')
-                         .attr('text-anchor', 'middle')
-                         .style('font', d => `bold ${d.r || 0}px sans-serif`)
+                         .attr('text-anchor', 'start')
+                         .style('font', d => `${d.r || 0}px 'Jetbrains Mono'`)
                          .text(d => d.description?.title || '');
             if (s_nodes) this.format(svg);
         },
@@ -39,19 +45,19 @@ export function initSvgNodes(data: SimulationData): NodeComponentManager {
             circles?.attr('cx', (d) => d_selectX(d))
                    .attr('cy', (d) => d_selectY(d))
                    .attr('r', ((d) => d_selectRadius(d) || 10))
-                   .attr('fill', (d => d?.color ?? '#ffffff'));
+                   .attr('fill', (d => d?.color ?? '#ffffff'))
+                   .attr('stroke', (d => d?.stroke ?? '#ffffff'));
 
-            if (simulation) {
-                let click =
-                        (event: D3DragEvent<any, any, any>, d: Datum) => {
-                            d.reset?.();
-                            simulation?.alphaTarget(.9).restart();
-                            (d.log ?? (() => console.log(d)))?.();
-                        }
-
-                // @ts-ignore
-                circles?.on('click', click);
-            }
+            // @ts-ignore
+            const drag = d3drag<unknown, Datum>().on('drag', dragged)
+                                                 .on('end', (e, d) => d.dragBehavior?.release?.(e, d));
+            s_g.selectAll('.node-wrapper')?.call(drag);
+            circles?.on('click', (event: MouseEvent, d: Datum) => {
+                event.stopPropagation();
+                !event.shiftKey && d.reset?.();
+                simulation?.alphaTarget(.9).restart();
+                (d.click ?? (() => console.log(d)))?.(event);
+            });
         },
         selection(svg: SvgSelection) { return svg.select('g.nodes') as unknown as D3NodeSelection; },
         setData(svg, data) { this.selection(svg).selectAll('circle').data(data); },
