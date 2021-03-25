@@ -1,6 +1,16 @@
 {
-  "name": "@spwashi/react-d3",
-  "version": "0.2.8",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -14,8 +24,34 @@
     "d3": "^6.3.1",
     "d3-selection": "^2.0.0",
     "d3-zoom": "^2.0.0",
+    "styled-components": "^5.2.1",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
+  },
+  "devDependencies": {
+    "@types/d3": "^6.2.0",
+    "@types/styled-components": "^5.1.9",
+    "babel-cli": "^6.26.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "main": "index.js",
+  "module": "index.js",
+  "name": "@spwashi/react-d3",
+  "peerDependencies": {
+    "react": ">=17.1.0",
+    "react-dom": ">=17.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spwashi/react-d3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,39 +63,5 @@
     "prepare": "yarn run build",
     "postpublish": "cd dist || true; cp -rf package.json ../"
   },
-  "main": "index.js",
-  "module": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/spwashi/react-d3"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
-  },
-  "devDependencies": {
-    "@types/d3": "^6.2.0",
-    "babel-cli": "^6.26.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1"
-  }
+  "version": "0.2.8"
 }

@@ -82,11 +82,10 @@ export function simForces<F>(forces: ForceConfiguration | undefined,
 
                                         for (; i < n; ++i) {
                                             const curr_node = data.nodes[i] as Datum;
-                                            curr_node?.forces?.boundary?.smallest?.x?.();
-                                            curr_node?.forces?.boundary?.largest?.x?.();
-
-                                            curr_node?.forces?.boundary?.smallest?.y?.();
-                                            curr_node?.forces?.boundary?.largest?.y?.();
+                                            let forces      = curr_node.forces;
+                                            let boundary    = forces?.boundary;
+                                            if (!boundary) continue;
+                                            boundary();
                                         }
                                     })
 
