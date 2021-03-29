@@ -64,5 +64,5 @@
     "prepare": "yarn run build",
     "postpublish": "cd dist || true; cp -rf package.json ../"
   },
-  "version": "0.2.9"
+  "version": "0.3.0"
 }
