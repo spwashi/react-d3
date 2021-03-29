@@ -1,10 +1,10 @@
 # @spwashi/react-d3
 
-React components meant to manage the lifecycle/events of a data visualization created using [d3](https://d3js.org/).
+React components for managing the lifecycle/events of data visualizations, built on top of [d3](https://d3js.org/).
 
 ## Overview
 
-The included sample application in the `./src/app` directory is an example of how I'd organize a d3 project with scaleability in mind.
+Check out the sample application in  `./src/app`; it has a configurable interface for tweaking graphs and/or force simulations live
 
 ### Installation
 
@@ -16,7 +16,7 @@ npm install @spwashi/react-d3
 
 ### Usage
 
-See [this example usage](https://github.com/spwashi/react-d3/blob/master/src/App.tsx) of this library
+See [this example](https://github.com/spwashi/react-d3/blob/master/src/App.tsx)
 
 
 ### To Do
