@@ -1,8 +1,8 @@
 # @spwashi/react-d3
 
-## Overview
+React components meant to manage the lifecycle/events of a data visualization created using [d3](https://d3js.org/).
 
-This library contains React components for rendering SVGs using [d3](https://d3js.org/).
+## Overview
 
 The included sample application in the `./src/app` directory is an example of how I'd organize a d3 project with scaleability in mind.
 
