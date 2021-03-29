@@ -1,9 +1,7 @@
-import {SimulationRoot} from '../hooks/simulation.types';
+import {SimulationRoot} from './types';
 import {ViewBox} from '../viz.types';
 
 export function simulationRoot_componentManagers(root: SimulationRoot) {
-    const [edges, nodes] = root.componentManagers;
-    return {edges, nodes};
 }
 
 /**

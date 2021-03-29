@@ -1,66 +1,60 @@
 import {Simulation} from 'd3';
-import {useCallback, useEffect, useState} from 'react';
-import {useSvgComponents} from './useSvgComponents';
-import {useD3RootSvg} from '../../hooks/useD3RootSvg';
-import {ForceConfiguration} from '../../hooks/useSimulation.types';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useSimulationRoot} from './useSimulationRoot';
 import {ViewBox} from '../../viz.types';
-import {simForces} from '../callbacks/forces';
-import {simTick} from '../callbacks/tick';
-import {initSimulationRoot} from '../callbacks/init';
-import {SimulationData, Style} from './types/types';
+import {initSimulation} from '../forces/init';
+import {defaultTick} from '../forces/default/tick';
+import {SimulationElement, SimulationRoot} from '../types';
+import {SimulationData} from '../data/types';
+import {ForceConfiguration} from '../forces/types';
 
-////////////////////
-
-/**
- * Function Parameters for {@see useSimulation}
- */
 interface SimulationParameters {
-    offset: ViewBox;
+    viewBox: ViewBox;
     data: SimulationData;
-    style: Style;
     forces?: ForceConfiguration;
-
+    components: SimulationElement<any>[]
 
 }
 
+
 /**
- * Function that creates a D3 Graphic
+ * Hook to handle ticking/updating of the simulation
  *
- ***    Nodes and Links
- ***    Optional force simulation
- *
- * @param offset
- * @param information
- * @param style
- * @param simSettings
+ * @param root
+ * @param config
+ * @param data
+ * @param dataChangeKey
  */
-export function useSimulation({offset, data, style, forces: forceSettings}: SimulationParameters) {
-    const components           = useSvgComponents(data, forceSettings);
-    const simRoot              = useD3RootSvg({offset, data, components});
-    const simulationController = useState<Simulation<any, any>>();
-    const [simulation]         = simulationController;
+function useSimulationLifecycle(root: SimulationRoot<SimulationElement<any>[]>, config: ForceConfiguration | undefined, data: SimulationData, dataChangeKey: any) {
+    const [simulation, setSimulation] = useState<Simulation<any, any>>();
+    const tick                        = useCallback(() => defaultTick(root), [root]);
+    const refresh                     = useCallback(() => setSimulation(initSimulation({config, data, tick})),
+                                                    [config, data, tick]);
+    useEffect(refresh, [dataChangeKey, config, refresh]);
+    return simulation;
+}
 
-    // Stylize the SVG
+
+/**
+ * Hook for initializing and managing the state of a simulation
+ * @param viewBox
+ * @param data
+ * @param components
+ * @param forces
+ * @param changeKey
+ */
+export function useSimulation(
     {
-        useEffect(() => initSimulationRoot(simRoot, offset), [offset]);
-    }
-
-    // Setup the Force simulation
-    {
-        const deps = [data.nodes,
-                      data.edges,
-                      style.radius,
-                      forceSettings,
-                      offset];
-
-        const update     = useCallback(() => simTick(simRoot, data, simulation), deps);
-        const makeForces = useCallback(() => simForces(forceSettings, data, offset, update, simulationController), deps);
-        useEffect(makeForces, deps);
-    }
-
-    // Reheat the simulation
-    {
-        useEffect(() => { simulation?.alphaTarget(1).restart(); }, [forceSettings, !!simulation, offset])
-    }
-    return simRoot.svg ? simRoot.svg.node() : null;
+        viewBox,
+        data,
+        components,
+        forces,
+    }: SimulationParameters,
+    changeKey?: any[],
+): SVGElement | null {
+    const key        = useMemo(() => Date.now(), changeKey ?? [data.nodes, data.edges])
+    const root       = useSimulationRoot<SimulationElement<any>[]>({viewBox, data, components}, key);
+    const simulation = useSimulationLifecycle(root, forces, data, key);
+    useEffect(() => { simulation?.alphaTarget(1).restart(); }, [forces, simulation, viewBox])
+    return root.svg ? root.svg.node() : null;
 }
