@@ -4,8 +4,8 @@ import {useSimulationRoot} from './useSimulationRoot';
 import {ViewBox} from '../../viz.types';
 import {initSimulation} from '../forces/init';
 import {defaultTick} from '../forces/default/tick';
-import {SimulationElement, SimulationRoot} from '../types';
-import {SimulationData} from '../data/types';
+import {SimulationElement, SimulationRoot} from '../../root/simulation/simulation.types';
+import {SimulationData} from '../../root/data/data.types';
 import {ForceConfiguration} from '../forces/types';
 
 interface SimulationParameters {
@@ -52,6 +52,7 @@ export function useSimulation(
     }: SimulationParameters,
     changeKey?: any[],
 ): SVGElement | null {
+    // eslint-disable-next-line
     const key        = useMemo(() => Date.now(), changeKey ?? [data.nodes, data.edges])
     const root       = useSimulationRoot<SimulationElement<any>[]>({viewBox, data, components}, key);
     const simulation = useSimulationLifecycle(root, forces, data, key);

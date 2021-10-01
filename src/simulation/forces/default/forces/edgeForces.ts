@@ -1,7 +1,7 @@
 import {ForceCallbackParams} from '../../types';
 import {forceLink} from 'd3';
-import {NodeDatum} from '../../../data/types/node';
-import {EdgeDatum} from '../../../data/types/edge';
+import {NodeDatum} from '../../../../root/data/components/node.types';
+import {EdgeDatum} from '../../../../root/data/components/edge.types';
 
 export function edgeForces({config, data, simulation}: ForceCallbackParams) {
     {
@@ -11,7 +11,7 @@ export function edgeForces({config, data, simulation}: ForceCallbackParams) {
                                           forceLink<NodeDatum, EdgeDatum>()
                                               .links(data.edges)
                                               .id(d => d.id ?? '')
-                                              .strength((link) => (((link as EdgeDatum).strength ?? 1) * nodeLinkStrength)));
+                                              .strength((link) => (((link as EdgeDatum).strength ?? 1) * nodeLinkStrength/500)));
 
         }
     }

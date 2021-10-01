@@ -1,32 +1,47 @@
-import {SimulationData} from '../../../../simulation/data/types';
+import {SimulationData} from '../../../../root/data/data.types';
 import {ValueFn} from 'd3';
-import {SimulationElement} from '../../../../simulation/types';
-import {NodeDatum} from '../../../../simulation/data/types/node';
-import {D3EdgeSelection} from '../../../../simulation/data/types/edge';
-import {SvgSelection} from '../../../../simulation/data/types/selection';
+import {SimulationElement} from '../../../../root/simulation/simulation.types';
+import {NodeDatum} from '../../../../root/data/components/node.types';
+import {D3EdgeSelection} from '../../../../root/data/components/edge.types';
+import {SvgSelection} from '../../../../root/data/selection.types';
+import {EDGE_COMPONENT_NAME} from './constants';
+import {svg_selectEdgeLines, svg_selectEdges} from './selectors/svg';
 
-const svg_selectEdges = (svg: SvgSelection) => (svg.select('g.edges').selectAll('line') as unknown as D3EdgeSelection);
+type L = { source: NodeDatum, target: NodeDatum };
+type GenericValueFn = ValueFn<any, any, any>;
+
+function update(svg: SvgSelection, data: SimulationData) {
+    if (!data.edges) return;
+    console.log(data.edges)
+    const edges       = svg_selectEdges(svg);
+    const wrapperData = edges.data(data.edges ?? [],
+                                   d => `${d.source.id} ${d.target.id}`);
+    wrapperData.exit()
+               .remove();
+    wrapperData.enter()
+               .append('g')
+               .classed('edge-wrapper', true)
+        //
+               .append('line')
+               .attr('stroke', '#ff0000')
+               .attr('stroke-width', `10px`)
+               .attr('x1', ((l: L) => (l.source?.x)) as GenericValueFn)
+               .attr('y1', ((l: L) => l.source?.y) as GenericValueFn)
+               .attr('x2', ((l: L) => l.target?.x) as GenericValueFn)
+               .attr('y2', ((l: L) => l.target?.y) as GenericValueFn);
+}
 
 export function edges(): SimulationElement<D3EdgeSelection> {
-    type L = { source: NodeDatum, target: NodeDatum };
-    type GenericValueFn = ValueFn<any, any, any>;
     return {
-        update(svg: SvgSelection, data: SimulationData) {
-            const edges = svg.select('g.edges')
-                             .selectAll('g');
-            edges
-                .selectAll('line')
-                .data(data.edges ?? [])
-                .join('line')
-                .attr('stroke', '#cccccc')
-                .attr('stroke-width', `4px`);
-        },
-        tick(svg) {
-            svg_selectEdges(svg)
-                .attr('x1', ((l: L) => (l.source?.x)) as GenericValueFn)
-                .attr('y1', ((l: L) => l.source?.y) as GenericValueFn)
-                .attr('x2', ((l: L) => l.target?.x) as GenericValueFn)
-                .attr('y2', ((l: L) => l.target?.y) as GenericValueFn);
-        },
+        name: EDGE_COMPONENT_NAME,
+        update,
+        tick,
     };
+}
+function tick(svg: SvgSelection) {
+    svg_selectEdgeLines(svg)
+        .attr('x1', ((l: L) => (l.source?.x)) as GenericValueFn)
+        .attr('y1', ((l: L) => l.source?.y) as GenericValueFn)
+        .attr('x2', ((l: L) => l.target?.x) as GenericValueFn)
+        .attr('y2', ((l: L) => l.target?.y) as GenericValueFn);
 }

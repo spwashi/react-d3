@@ -1,5 +1,5 @@
 import {ForceCallbackParams} from '../../types';
-import {NodeDatum} from '../../../data/types/node';
+import {NodeDatum} from '../../../../root/data/components/node.types';
 
 /**
  * Force that comes from a property
@@ -14,7 +14,6 @@ export function internal({config, data, simulation}: ForceCallbackParams) {
                                       function correctiveForce() {
                                           if (typeof nodes === 'undefined') return
                                           let i = 0, n = nodes.length;
-                                          console.log(nodes.length)
 
                                           for (; i < n; ++i) {
                                               const curr_node = nodes[i] as NodeDatum;

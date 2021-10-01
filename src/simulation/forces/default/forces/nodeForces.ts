@@ -1,6 +1,6 @@
 import {ForceCallbackParams} from '../../types';
 import {forceManyBody} from 'd3';
-import {NodeDatum} from '../../../data/types/node';
+import {NodeDatum} from '../../../../root/data/components/node.types';
 
 export function nodeForces({config, simulation}: ForceCallbackParams) {
     {

@@ -1,5 +1,5 @@
 import {BaseType, D3DragEvent, D3ZoomEvent} from 'd3';
-import {SvgComponentSelection} from '../selection';
+import {SvgComponentSelection} from '../selection.types';
 
 export type DatumDragBehavior = {
     locked?: boolean;

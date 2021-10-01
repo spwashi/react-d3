@@ -30,7 +30,7 @@ export const AppWrapper =
                              width: 100%;
                          }
                          .d3app__config-widget-wrapper {
-                             position: absolute;
+                             position: fixed;
                              align-content: stretch;
                              flex-direction: row;
                              bottom: 1rem;

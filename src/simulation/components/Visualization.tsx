@@ -1,8 +1,8 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import {ViewBox} from '../../viz.types';
 import {useSimulation} from '../hooks/useSimulation';
-import {SimulationElement} from '../types';
-import {NodeDatum} from '../data/types/node';
+import {SimulationElement} from '../../root/simulation/simulation.types';
+import {NodeDatum} from '../../root/data/components/node.types';
 import {ForceConfiguration} from '../forces/types';
 
 type VizParams = {
@@ -13,7 +13,7 @@ type VizParams = {
     viewBox: ViewBox
 };
 
-export function Visualization({data, forces, className, components,  viewBox}: VizParams) {
+export function Visualization({data, forces, className, components, viewBox}: VizParams) {
     const ref: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
 
     const simulation = useSimulation({data, forces, components, viewBox});
@@ -28,7 +28,7 @@ export function Visualization({data, forces, className, components,  viewBox}: V
                       simulation.remove();
                   }
               },
-              [ref.current, simulation]);
+              [simulation]);
 
     const style = useMemo(() => ({
         display:        'flex',

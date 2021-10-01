@@ -9,7 +9,7 @@ import {center} from '../../../../simulation/forces/default/forces/center';
 import {internal} from '../../../../simulation/forces/default/forces/internal';
 import {collision} from '../../../../simulation/forces/default/forces/collision';
 import {useLocalStorage} from '../../../../util/hooks/useLocalStorage';
-import { merge } from 'lodash';
+import {merge} from 'lodash';
 
 export function useConfiguredViewBox(config: VizConfigState) {
     const viewBox: ViewBox = useMemo(() =>
@@ -43,7 +43,7 @@ export function useConfiguredForces(config: VizConfigState) {
                       doInternal && internal,
                       collisionForce && collision,
                   ].filter(i => !!i) as Force[]
-console.log(forces.length, '-----------------')
+        // console.log(forces.length, '-----------------')
         return ({
             options: {
                 nodeCharge:   nodeForceStrength,
@@ -65,10 +65,12 @@ export function useAppConfig<T extends VizConfigState = any>(model: T): [T, (con
             Object.fromEntries(
                 Object.entries(merge({}, config, model))
                       .map(
-                          entry => [entry[0], {
-                              state: entry[1]?.defaultState,
-                              ...entry[1] || {},
-                          }],
+                          entry => [
+                              entry[0], {
+                                  state: entry[1]?.defaultState,
+                                  ...entry[1] || {},
+                              },
+                          ],
                       ),
             ) as T,
         )

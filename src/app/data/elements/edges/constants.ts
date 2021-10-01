@@ -1,0 +1,1 @@
+export const EDGE_COMPONENT_NAME = 'edges';

@@ -13,7 +13,7 @@ const getKey = (key: string, initialValue: any) => {
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (t: T) => any] {
     const [storedValue, setStoredValue] = useState<T>(() => getKey(key, initialValue));
 
-    useEffect(() => setStoredValue(getKey(key, initialValue)), [key])
+    useEffect(() => setStoredValue(getKey(key, initialValue)), [key, initialValue])
 
     const setValue = useCallback((value: Function | T) => {
         try {

@@ -1,5 +1,5 @@
-import {NodeDatum} from '../node';
-import {SvgComponentSelection} from '../selection';
+import {NodeDatum} from './node.types';
+import {SvgComponentSelection} from '../selection.types';
 
 export type EdgeDatum = {
     source: NodeDatum | any;

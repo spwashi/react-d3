@@ -1,7 +1,7 @@
 import {Simulation} from 'd3';
-import {NodeDatum} from '../data/types/node';
-import {SimulationData} from '../data/types';
-import {EdgeDatum} from '../data/types/edge';
+import {NodeDatum} from '../../root/data/components/node.types';
+import {SimulationData} from '../../root/data/data.types';
+import {EdgeDatum} from '../../root/data/components/edge.types';
 
 export interface ForceConfiguration {
     options: {

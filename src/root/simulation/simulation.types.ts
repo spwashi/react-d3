@@ -1,6 +1,5 @@
-import {SimulationData} from '../data/types';
-import {ViewBox} from '../../viz.types';
-import {SvgSelection} from '../data/types/selection';
+import {SimulationData} from '../data/data.types';
+import {SvgSelection} from '../data/selection.types';
 
 /**
  * Objects,
@@ -8,6 +7,7 @@ import {SvgSelection} from '../data/types/selection';
  *  and functions to read and modify the nodes of a specific branch of components in this visualization
  */
 export interface SimulationElement<SelectionType, ItemData = any> {
+    name: keyof SimulationData;
     tick: (selection: SvgSelection) => void;
     update: (svg: SvgSelection, data: SimulationData) => void;
 }

@@ -1,6 +1,6 @@
 import {forceSimulation} from 'd3';
 import {defaultTick} from './default/tick';
-import {SimulationData} from '../data/types';
+import {SimulationData} from '../../root/data/data.types';
 import {ForceConfiguration} from './types';
 
 interface Params {

@@ -1,5 +1,5 @@
-import {NodeDatum} from './node';
-import {EdgeDatum} from './edge';
+import {NodeDatum} from './components/node.types';
+import {EdgeDatum} from './components/edge.types';
 
 export type DataCalculationPoint = {
     width?: number;

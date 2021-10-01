@@ -2,7 +2,7 @@ import {useConfiguredForces, useConfiguredSize, useConfiguredViewBox} from '../c
 import React, {useMemo} from 'react';
 import {nodes} from '../../data/elements/nodes/nodes';
 import {Visualization} from '../../../simulation/components/Visualization';
-import {NodeDatum} from '../../../simulation/data/types/node';
+import {NodeDatum} from '../../../root/data/components/node.types';
 import {VizConfigState} from '../config/config/types';
 import {edges} from '../../data/elements/edges/edges';
 
