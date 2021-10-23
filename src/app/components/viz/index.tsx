@@ -1,10 +1,11 @@
-import {useConfiguredForces, useConfiguredSize, useConfiguredViewBox} from '../config/hooks';
+import {useConfiguredSize, useConfiguredViewBox} from '../config/hooks';
 import React, {useMemo} from 'react';
 import {nodes} from '../../data/elements/nodes/nodes';
 import {Visualization} from '../../../simulation/components/Visualization';
 import {NodeDatum} from '../../../root/data/components/node.types';
 import {VizConfigState} from '../config/config/types';
 import {edges} from '../../data/elements/edges/edges';
+import {useConfiguredForces} from '../config/hooks/useConfiguredForces';
 
 interface AppVizParams {
     data: { nodes: NodeDatum[] };

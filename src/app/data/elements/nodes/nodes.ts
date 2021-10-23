@@ -14,6 +14,8 @@ function tick(svg: SvgSelection) {
         .attr('cx', (d) => d_selectX(d as NodeDatum))
         .attr('cy', (d) => d_selectY(d as NodeDatum))
         .attr('r', ((d) => d_selectRadius(d as NodeDatum) || 10))
+        .attr('fill', d => Math.random() > .95 && ((d.id ?? 0) % 7) ? ( '#42a5c3') : (d as NodeDatum).color ?? '#ffffff')
+
 }
 function update(svg: SvgSelection, data: SimulationData) {
     if (!data.nodes) return;
@@ -21,6 +23,22 @@ function update(svg: SvgSelection, data: SimulationData) {
     const wrapperData = nodes.data(data.nodes,
                                    d => d.id as any);
 
+    const lg =
+              svg.append('defs').append('linearGradient')
+                 .attr('id', 'mygrad')
+                 .attr('x1', '0%')
+                 .attr('x2', '0%')
+                 .attr('y1', '0%')
+                 .attr('y2', '100%')
+    ;
+    lg.append('stop')
+      .attr('offset', '0%')
+      .style('stop-color', '#42a5c3')
+      .style('stop-opacity', 1);
+
+    lg.append('stop')
+      .attr('offset', '100%')
+      .style('stop-color', 'white');
     const wrapperEnter = wrapperData.enter()
                                     .append('g')
                                     .classed('node-wrapper', true)
@@ -29,7 +47,7 @@ function update(svg: SvgSelection, data: SimulationData) {
                                      .attr('cx', (d) => d_selectX(d as NodeDatum))
                                      .attr('r', ((d) => d_selectRadius(d as NodeDatum) || 10))
                                      .attr('cy', (d) => d_selectY(d as NodeDatum))
-                                     .attr('fill', d => (d as NodeDatum).color ?? '#ffffff');
+    ;
     wrapperData.exit()
                .remove();
 

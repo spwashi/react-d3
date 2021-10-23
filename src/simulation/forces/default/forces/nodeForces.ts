@@ -8,7 +8,7 @@ export function nodeForces({config, simulation}: ForceCallbackParams) {
         if (nodeForceStrength) {
             simulation = simulation
                 .force('charge', forceManyBody<NodeDatum>()
-                    .strength((d: NodeDatum) => (d?.forces?.electronegativity ?? 1) * nodeForceStrength));
+                    .strength((d: NodeDatum) => (d?.forces?.electronegativity ?? 1) * nodeForceStrength/2));
         }
     }
     return simulation;

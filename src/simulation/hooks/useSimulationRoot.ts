@@ -33,8 +33,14 @@ export function useSimulationRoot<ComponentManagers extends SimulationElement<an
 
             const size  = (viewBox[2] - viewBox[0]) / 100;
             const outer = _svg.append('g');
-            outer.append('circle').style('fill', 'white').attr('r', size).attr('cx', 0);
-            outer.append('text').style('fill', 'black').text('0, 0').attr('font-size', size)
+            outer.append('circle').style('fill', 'white').attr('r', 10).attr('cx', 0);
+            outer.append('text')
+                 .style('fill', 'black')
+                 .style('opacity', '.3')
+                 .text('0 , 0')
+                 .attr('text-anchor', 'middle')
+                 .attr('font-size', size)
+                .attr('font-family', 'monospace')
             return _svg;
         },
         [viewBox],

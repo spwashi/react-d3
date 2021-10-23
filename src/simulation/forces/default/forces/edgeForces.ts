@@ -5,7 +5,7 @@ import {EdgeDatum} from '../../../../root/data/components/edge.types';
 
 export function edgeForces({config, data, simulation}: ForceCallbackParams) {
     {
-        const nodeLinkStrength = config.options.linkStrength;
+        const nodeLinkStrength = config.options.edgeStrength;
         if (nodeLinkStrength && data.edges) {
             simulation = simulation.force('link',
                                           forceLink<NodeDatum, EdgeDatum>()

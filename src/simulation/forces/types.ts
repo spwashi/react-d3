@@ -3,12 +3,23 @@ import {NodeDatum} from '../../root/data/components/node.types';
 import {SimulationData} from '../../root/data/data.types';
 import {EdgeDatum} from '../../root/data/components/edge.types';
 
+type NumberRange = { max: number, min: number };
+
+export type BoundingForceConfig = {
+    width: number;
+    height: number;
+    x: NumberRange,
+    y: NumberRange,
+    option: number
+};
+
 export interface ForceConfiguration {
     options: {
         center?: number;
         internal?: boolean;
         nodeCharge?: number;
-        linkStrength?: number;
+        edgeStrength?: number;
+        bounding?: BoundingForceConfig
     };
     forces: Force[]
 }

@@ -9,9 +9,8 @@ export const GlobalStyle =
                      }
 
                      #root {
-                         background: #a991c4;
+                         background: #bce9ff;
                          display: flex;
-                         justify-content: center;
                          align-items: center;
                      }
                  `;

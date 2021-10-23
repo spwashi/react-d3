@@ -2,8 +2,14 @@ import styled from 'styled-components';
 
 export const AppWrapper =
                  styled.div`
-                     border: thin solid #666;
-                     svg { border: thick solid black; }
+                     border: thin solid rgba(255, 255, 255, .2);
+                     background: #999;
+                     width: 100%;
+                     svg {
+                         background: rgba(300, 125, 50, .01);
+                         box-shadow: 12px 12px 16px 0 rgba(0, 0, 0, 0.05),
+                             -8px -8px 12px 0 rgba(200, 200, 200, 0.05);;
+                     }
 
                      .input-container { padding: 1rem; }
                      .input-wrapper {
@@ -17,31 +23,37 @@ export const AppWrapper =
                      display: flex;
                      .d3app-wrapper-inner {
                          position: relative;
-                         display: inline-flex;
-                         align-items: center;
+                         display: flex;
                          justify-content: center;
+                         height: 100vh;
+                         width: 100%;
+                         border: thick solid red;
                          .viz-wrapper {
                              min-height: 200px;
                              display: flex;
                              align-items: center;
+                             justify-content: center;
                          }
                          .viz-wrapper {
                              display: flex;
                              width: 100%;
                          }
                          .d3app__config-widget-wrapper {
-                             position: fixed;
-                             align-content: stretch;
+                             position: absolute;
                              flex-direction: row;
-                             bottom: 1rem;
-                             left: 1rem;
+                             top: 0;
+                             left: 0;
                              color: white;
-                             background: rgba(0, 0, 0, .7);
-                             padding: .5rem;
+                             padding: 2rem;
+                             font-size: 1rem;
                              font-family: "JetBrains Mono", monospace;
-                             display: block;
+                             display: flex;
                              .d3app__config-widget {
+                                 overflow: scroll;
+                                 height: 50rem;
+                                 width: 50rem;
                                  display: flex;
+                                 resize: both;
                                  flex-direction: column-reverse;
                                  .title {
                                      font-weight: bold;
@@ -51,7 +63,8 @@ export const AppWrapper =
                                      font-size: .7em;
                                  }
                                  .input-wrapper {
-                                     padding: .2rem;
+                                     background: rgba(0, 0, 0, .7);
+                                     padding: 1rem;
                                      margin: .2rem;
                                      border-bottom: thin solid rgba(255, 255, 255, .3);
                                      &:focus-within, &:hover {
@@ -65,6 +78,7 @@ export const AppWrapper =
                              button {
                                  cursor: pointer;
                                  width: 100%;
+                                 font-size: 2rem;
                              }
                          }
                      }

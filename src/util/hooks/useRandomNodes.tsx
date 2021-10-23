@@ -20,7 +20,6 @@ export function useRandomNodes(config: VizConfigState) {
               useCallback((id): NodeDatum => {
                   let radius            = readConfig(config.radius) ?? 0;
                   const node: NodeDatum = {};
-                  console.log(id);
                   node.id = +id;
                   if (node.id === 200) stopGenerating();
 
@@ -55,7 +54,7 @@ export function useRandomNodes(config: VizConfigState) {
 
     useLayoutEffect(() => {
         if (!isActiveRef.current) return;
-        const ms = readConfig(config.interval, 1000);
+        const ms = readConfig(config.n, 1000);
         const i  = setTimeout(() => { updateNodes() }, ms);
         return () => { clearTimeout(i); }
     }, [activeNodes]);
