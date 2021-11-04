@@ -1,4 +1,4 @@
-import {RangeVizConfigItem, VizConfigItem} from '../../config/types';
+import {EnumVizConfigItem, RangeVizConfigItem, VizConfigItem} from '../../config/types';
 import {RangeInputControl, RangeInputController, RangeInputValue} from './RangeInputWidget';
 import React from 'react';
 import {InputUpdateHandler} from './types';
@@ -14,6 +14,15 @@ interface InputItemParams<T = any> {
 function ToggleInput({value, onChange}: { value: boolean, onChange: (state: boolean) => void }) {
     return <input type="checkbox" checked={value} onChange={event => onChange(event.target.checked)}/>
 }
+
+function EnumInput({value, onChange, options}: { value: any, onChange: (state: any) => void, options: any[] }) {
+    return (
+        <select value={value} onChange={e => onChange(e.target.value)}>
+            {options.map(option => <option key={option} value={option}>{option}</option>)}
+        </select>
+    )
+}
+
 export function InputWidget({item, value, index, onChange}: InputItemParams) {
     const {type} = item;
     let valueComponent: JSX.Element | any;
@@ -32,6 +41,12 @@ export function InputWidget({item, value, index, onChange}: InputItemParams) {
         case 'toggle': {
             valueComponent = value ? 'yes' : 'no';
             inputComponent = <ToggleInput value={!!value} onChange={onChange}/>
+            break;
+        }
+        case 'enum': {
+            valueComponent  = value;
+            const {options} = item as EnumVizConfigItem;
+            inputComponent  = <EnumInput value={value} options={options} onChange={onChange}/>
             break;
         }
         default:

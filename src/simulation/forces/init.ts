@@ -1,7 +1,8 @@
-import {forceSimulation} from 'd3';
-import {defaultTick} from './default/tick';
-import {SimulationData} from '../../root/data/data.types';
+import {Simulation} from 'd3';
+import {SimulationData} from '../../data/_types/data.types';
 import {ForceConfiguration} from './types';
+import {NodeDatum} from '../../data/components/nodes/_types/node.types';
+import {EdgeDatum} from '../../data/components/edges/_types/edge.types';
 
 interface Params {
     config: ForceConfiguration | undefined;
@@ -9,14 +10,20 @@ interface Params {
     tick: any;
 }
 
-export function initSimulation({config, data, tick: lTick = defaultTick}: Params) {
+export function initSimulation(
+    simulation: Simulation<NodeDatum, EdgeDatum>,
+    {config, data, tick}: Params,
+) {
     if (!config) return;
-    const forces = config.forces;
-    const sim    = forces.reduce((simulation, force) => force({config, data, simulation}),
-                                 forceSimulation(data.nodes),
-    );
-    return sim.alphaDecay(0)
-              .on('tick', lTick)
-              .alphaTarget(.9)
-              .restart();
+    simulation.nodes(data.nodes ?? []);
+    return config
+        .forces
+        .reduce(
+            (simulation, force) =>
+                force({config, data, simulation}),
+            simulation,
+        ).alphaDecay(0)
+        .on('tick', tick)
+        .alphaTarget(.9)
+        .restart();
 }

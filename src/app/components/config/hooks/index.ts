@@ -28,19 +28,21 @@ export function useConfiguredSize(state: VizConfigState) {
 export function useAppConfig<T extends VizConfigState = any>(model: T): [T, (config: Partial<T>) => void] {
     const [config, setState] = useLocalStorage<Partial<T>>('d3app__config', model)
     useEffect(() => {
-        setState(
-            Object.fromEntries(
-                Object.entries(merge({}, config, model))
-                      .map(
-                          entry => [
-                              entry[0], {
-                                  state: entry[1]?.defaultState,
-                                  ...entry[1] || {},
-                              },
-                          ],
-                      ),
-            ) as T,
-        )
-    }, [model])
+                  setState(
+                      Object.fromEntries(
+                          Object.entries(merge({}, config, model))
+                                .map(
+                                    entry => [
+                                        entry[0], {
+                                            state: entry[1]?.defaultState,
+                                            ...entry[1] || {},
+                                        },
+                                    ],
+                                ),
+                      ) as T,
+                  )
+              },
+              // eslint-disable-next-line react-hooks/exhaustive-deps
+              [model])
     return [config as T, setState];
 }

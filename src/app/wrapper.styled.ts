@@ -11,9 +11,12 @@ export const AppWrapper =
                              -8px -8px 12px 0 rgba(200, 200, 200, 0.05);;
                      }
 
-                     .input-container { padding: 1rem; }
+                     .input-container { padding: .5rem; }
                      .input-wrapper {
                          padding-bottom: 1rem;
+                         .control-wrapper {
+                            display: flex;
+                         }
                          input {
                              margin: 0;
                              padding: 0;
@@ -44,14 +47,17 @@ export const AppWrapper =
                              top: 0;
                              left: 0;
                              color: white;
-                             padding: 2rem;
+                             padding: 0 2rem;
+                             max-height: 100vh;
                              font-size: 1rem;
                              font-family: "JetBrains Mono", monospace;
                              display: flex;
                              .d3app__config-widget {
-                                 overflow: scroll;
-                                 height: 50rem;
-                                 width: 50rem;
+                                 .d3app__config-widget-list {
+                                     overflow: scroll;
+                                     display: grid;
+                                     grid-template-columns: 1fr 1fr;
+                                 }
                                  display: flex;
                                  resize: both;
                                  flex-direction: column-reverse;
@@ -64,7 +70,7 @@ export const AppWrapper =
                                  }
                                  .input-wrapper {
                                      background: rgba(0, 0, 0, .7);
-                                     padding: 1rem;
+                                     padding: .5rem;
                                      margin: .2rem;
                                      border-bottom: thin solid rgba(255, 255, 255, .3);
                                      &:focus-within, &:hover {
@@ -75,7 +81,7 @@ export const AppWrapper =
                              input[type=range] {
                                  cursor: ew-resize;
                              }
-                             button {
+                             button.primary {
                                  cursor: pointer;
                                  width: 100%;
                                  font-size: 2rem;

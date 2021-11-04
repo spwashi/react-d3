@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {InputUpdateHandler} from './types';
 
 
@@ -54,10 +54,13 @@ export function RangeInputValue({value, setValue}: { value: number, setValue: (v
 
 
 export type RangeInputController = [number, InputUpdateHandler<number>];
-export function RangeInputControl(props: { title?: string; min?: number; max?: number; step?: number; controller: RangeInputController }, inputRef: React.RefObject<HTMLDivElement>) {
-    const step = props.step === undefined ? 1 : props.step;
-    const max  = props.max === undefined ? 5 : props.max;
-    const min  = props.min === undefined ? 0 : props.min;
+export function RangeInputControl(props: { title?: string; min?: number; max?: number; step?: number; controller: RangeInputController }) {
+    const [step, setStep]         = useState(props.step === undefined ? 1 : props.step);
+    const [max, setMax]           = useState(props.max === undefined ? 1 : props.max);
+    const [min, setMin]           = useState(props.min === undefined ? 1 : props.min);
+    const [expanded, setExpanded] = useState(false);
+    const value                   = props.controller[0];
+    const inputRef                = useRef<HTMLInputElement>(null);
     useEffect(
         () => {
             const el = inputRef.current;
@@ -65,21 +68,48 @@ export function RangeInputControl(props: { title?: string; min?: number; max?: n
 
             let wheel = (e: WheelEvent): void => {
                 e.preventDefault();
-                const v = props.controller[0] + (step * Math.round(e.deltaY));
+                const v = value + (step * Math.round(e.deltaY));
                 props.controller[1](Math.max(Math.min(v, max), min));
             };
             el.addEventListener('wheel', wheel);
 
             return () => el.removeEventListener('wheel', wheel)
         },
-        [props.controller[0], min, max, props.controller[1], step, inputRef],
+        [value, min, max, step, inputRef, props.controller],
     );
-    let input = <input style={{display: 'block', width: '100%'}}
+    const setValue = props.controller[1];
+    return (
+        <div className="input-wrapper">
+            <div className="control-wrapper">
+                <input style={{display: 'block', width: '100%'}}
                        type="range"
+                       ref={inputRef}
                        min={min}
                        max={max}
                        step={step}
-                       value={props.controller[0] || ''}
-                       onChange={e => props.controller[1](+e.target.value)}/>;
-    return input
+                       value={value || ''}
+                       onChange={e => setValue(+e.target.value)}/>
+                <button onClick={() => setExpanded(!expanded)}>{expanded ? '-' : '+'}</button>
+            </div>
+            <div className="expanded-controls" style={{display: expanded ? 'block' : 'none'}}>
+                <div>
+                    <div className="label">Value</div>
+                    <input type="number" value={value} onChange={e => setValue(+e.target.value)}/>
+                </div>
+                <div>
+                    <div className="label">Step</div>
+                    <input type="number" value={step} onChange={e => setStep(+e.target.value)}/>
+                </div>
+                <div>
+                    <div className="label">Min</div>
+                    <input type="number" value={min} onChange={e => setMin(+e.target.value)}/>
+                </div>
+                <div>
+                    <div className="label">Max</div>
+                    <input type="number" value={max} onChange={e => setMax(+e.target.value)}/>
+                </div>
+
+            </div>
+        </div>
+    )
 }

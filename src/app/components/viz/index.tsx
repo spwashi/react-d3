@@ -1,22 +1,21 @@
 import {useConfiguredSize, useConfiguredViewBox} from '../config/hooks';
 import React, {useMemo} from 'react';
-import {nodes} from '../../data/elements/nodes/nodes';
-import {Visualization} from '../../../simulation/components/Visualization';
-import {NodeDatum} from '../../../root/data/components/node.types';
+import {Visualization} from '../../../simulation/Visualization';
+import {NodeDatum} from '../../../data/components/nodes/_types/node.types';
 import {VizConfigState} from '../config/config/types';
-import {edges} from '../../data/elements/edges/edges';
 import {useConfiguredForces} from '../config/hooks/useConfiguredForces';
+import {SimulationElement} from '../../../_types/simulation/simulation.types';
 
 interface AppVizParams {
+    components: SimulationElement<any>[]
     data: { nodes: NodeDatum[] };
     config: VizConfigState;
 }
 
-export function ConfiguredVisualization({data, config}: AppVizParams) {
+export function ConfiguredVisualization({data, config, components}: AppVizParams) {
     const viewBox              = useConfiguredViewBox(config);
     const forces               = useConfiguredForces(config);
     const {width, height}      = useConfiguredSize(config);
-    const components           = useMemo(() => [nodes(), edges()], []);
     const innerVizWrapperStyle = useMemo(() => ({
         width:  width ? `${width}px` : '100%',
         height: height ? `${height}px` : '100%',

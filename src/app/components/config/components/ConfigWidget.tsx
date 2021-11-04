@@ -20,15 +20,15 @@ export function ConfigWidget({config, updateValues}: Props) {
                                         [config, updateValues]);
     return (
         <div className="d3app__config-widget" key={'inputs'}>
-            <button onClick={() => setOpen(!open)}>{open ? 'close' : 'edit'}</button>
-            <div className={'app--config-widget-list'}>
+            <div className={'d3app__config-widget-list'}>
                 {
                     open
                     ? Object.entries(config)
                             .map(([index, item]) => {
-                                if (!item) return;
+                                if (!item) return null;
                                 return <InputWidget value={item.state ?? item.defaultState}
                                                     index={index}
+                                                    key={index}
                                                     item={item}
                                                     onChange={val => update(index as keyof VizConfigState, val)}/>;
                             })
@@ -36,6 +36,7 @@ export function ConfigWidget({config, updateValues}: Props) {
                 }
 
             </div>
+            <button className="primary" onClick={() => setOpen(!open)}>{open ? 'close' : 'edit'}</button>
         </div>
     )
         ;
