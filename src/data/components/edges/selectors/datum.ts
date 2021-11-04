@@ -1,4 +1,4 @@
-import {NodeDatum} from '../../nodes/_types/node.types';
+import {NodeDatum} from '../../nodes/types';
 
 export type Edge = {
     source: NodeDatum;

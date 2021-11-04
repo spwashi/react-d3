@@ -1,9 +1,9 @@
 import {create} from 'd3';
 import {useEffect, useMemo} from 'react';
-import {SimulationData} from '../../data/_types/data.types';
-import {SimulationElement, SimulationRoot} from '../../_types/simulation/simulation.types';
+import {SimulationData} from '../../data/types';
+import {SimulationElement, SimulationRoot} from '../../types/simulation';
 import {ViewBox} from '../../viz.types';
-import {SvgSelection} from '../../_types/svg/selection.types';
+import {SvgSelection} from '../../types/svg';
 import {svg_appendCenterCircle} from '../svg/modifiers/svg_appendCenterCircle';
 import {svg_appendComponents} from '../svg/modifiers/svg_appendComponents';
 import {svg_addZoomBehavior} from '../svg/modifiers/svg_addZoomBehavior';
@@ -25,7 +25,7 @@ function useUpdateWhenDataChanges<ComponentManagers extends Components>(
 ) {
     useEffect(() => {
         svg && components.forEach(c => c.update(svg, data))
-    }, [svg, key, components, data.nodes, data.edges, data]);
+    }, [svg, key, components, data]);
 }
 export function useRootSvg<ComponentManagers extends Components>(
     params: SimRootParams<ComponentManagers>,

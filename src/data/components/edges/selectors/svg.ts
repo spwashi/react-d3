@@ -1,5 +1,5 @@
-import {SvgSelection} from '../../../../_types/svg/selection.types';
-import {D3EdgeSelection, EdgeDatum} from '../_types/edge.types';
+import {SvgSelection} from '../../../../types/svg';
+import {D3EdgeSelection, EdgeDatum} from '../types';
 import {getComponentWrapperClassname} from '../../../util/getComponentWrapperClassname';
 import {EDGE_COMPONENT_NAME} from '../constants';
 import {Selection} from 'd3';

@@ -1,5 +1,5 @@
 import {ForceCallbackParams} from '../types';
-import {NodeDatum} from '../../../data/components/nodes/_types/node.types';
+import {NodeDatum} from '../../../data/components/nodes/types';
 
 /**
  * Force that comes from a property

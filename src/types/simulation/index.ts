@@ -1,5 +1,5 @@
-import {SimulationData} from '../../data/_types/data.types';
-import {SvgSelection} from '../svg/selection.types';
+import {SimulationData} from '../../data/types';
+import {SvgSelection} from '../svg';
 
 /**
  * Objects,

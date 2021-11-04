@@ -61,6 +61,7 @@ export function RangeInputControl(props: { title?: string; min?: number; max?: n
     const [expanded, setExpanded] = useState(false);
     const value                   = props.controller[0];
     const inputRef                = useRef<HTMLInputElement>(null);
+    const setValue                = props.controller[1];
     useEffect(
         () => {
             const el = inputRef.current;
@@ -68,16 +69,24 @@ export function RangeInputControl(props: { title?: string; min?: number; max?: n
 
             let wheel = (e: WheelEvent): void => {
                 e.preventDefault();
-                const v = value + (step * Math.round(e.deltaY));
-                props.controller[1](Math.max(Math.min(v, max), min));
+
+                const item = e.shiftKey ? max : (e.metaKey ? min : value);
+
+                const v = item + (step * Math.round(e.deltaY));
+                if (e.shiftKey) {
+                    setMax(v);
+                } else if (e.metaKey) {
+                    setMin(v);
+                } else {
+                    setValue(Math.max(Math.min(v, max), min));
+                }
             };
             el.addEventListener('wheel', wheel);
 
             return () => el.removeEventListener('wheel', wheel)
         },
-        [value, min, max, step, inputRef, props.controller],
+        [value, min, max, step, inputRef, setValue],
     );
-    const setValue = props.controller[1];
     return (
         <div className="input-wrapper">
             <div className="control-wrapper">

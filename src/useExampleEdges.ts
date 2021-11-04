@@ -1,5 +1,5 @@
-import {NodeDatum} from './data/components/nodes/_types/node.types';
-import {EdgeDatum} from './data/components/edges/_types/edge.types';
+import {NodeDatum} from './data/components/nodes/types';
+import {EdgeDatum} from './data/components/edges/types';
 import {useEffect, useMemo} from 'react';
 import {VizConfigState} from './app/components/config/config/types';
 import {readConfig} from './app/components/config/util/read';

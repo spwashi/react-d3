@@ -1,8 +1,8 @@
 import {Selection} from 'd3';
 import {getComponentWrapperClassname} from '../../../util/getComponentWrapperClassname';
 import {NODE_COMPONENT_NAME} from '../constants';
-import {NodeDatum, NodeDatumSelection} from '../_types/node.types';
-import {SvgSelection} from '../../../../_types/svg/selection.types';
+import {NodeDatum, NodeDatumSelection} from '../types';
+import {SvgSelection} from '../../../../types/svg';
 
 
 export type NodeWrapperSelection = Selection<SVGGElement, NodeDatum, any, any>;

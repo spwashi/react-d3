@@ -1,8 +1,8 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import {ViewBox} from '../viz.types';
 import {useSimulation} from './hooks/useSimulation';
-import {SimulationElement} from '../_types/simulation/simulation.types';
-import {NodeDatum} from '../data/components/nodes/_types/node.types';
+import {SimulationElement} from '../types/simulation';
+import {NodeDatum} from '../data/components/nodes/types';
 import {ForceConfiguration} from './forces/types';
 
 type VizParams = {

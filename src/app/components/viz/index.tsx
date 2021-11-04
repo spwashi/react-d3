@@ -1,10 +1,10 @@
 import {useConfiguredSize, useConfiguredViewBox} from '../config/hooks';
 import React, {useMemo} from 'react';
 import {Visualization} from '../../../simulation/Visualization';
-import {NodeDatum} from '../../../data/components/nodes/_types/node.types';
+import {NodeDatum} from '../../../data/components/nodes/types';
 import {VizConfigState} from '../config/config/types';
 import {useConfiguredForces} from '../config/hooks/useConfiguredForces';
-import {SimulationElement} from '../../../_types/simulation/simulation.types';
+import {SimulationElement} from '../../../types/simulation';
 
 interface AppVizParams {
     components: SimulationElement<any>[]

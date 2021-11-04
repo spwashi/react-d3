@@ -1,5 +1,5 @@
 import {BoundingForceConfig, ForceCallbackParams} from '../types';
-import {NodeDatum} from '../../../data/components/nodes/_types/node.types';
+import {NodeDatum} from '../../../data/components/nodes/types';
 
 function hardStop(datum: NodeDatum, bounding: BoundingForceConfig) {
     let {x, y} = datum;

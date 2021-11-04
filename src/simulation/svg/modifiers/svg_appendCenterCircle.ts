@@ -1,4 +1,4 @@
-import {SvgSelection} from '../../../_types/svg/selection.types';
+import {SvgSelection} from '../../../types/svg';
 import {ViewBox} from '../../../viz.types';
 
 export function svg_appendCenterCircle(svg: SvgSelection, viewBox: ViewBox) {

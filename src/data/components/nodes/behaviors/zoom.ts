@@ -1,8 +1,10 @@
 import {zoom as d3zoom} from 'd3-zoom';
 import {BaseType, D3ZoomEvent, select, Selection} from 'd3';
-import {NodeDatum} from '../_types/node.types';
+import {NodeDatum} from '../types';
 
-export function addZoomBehavior(circles: Selection<BaseType, any, BaseType, any>, doZoom = false) {
+export function addZoomBehavior(circles: Selection<BaseType, any, BaseType, any>) {
+    const doZoom = false;
+
     const zoom =
               d3zoom<any, any>().on('zoom',
                                     function (this: HTMLElement, event: D3ZoomEvent<any, any> & { subject: NodeDatum }) {

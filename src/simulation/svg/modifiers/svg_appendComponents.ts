@@ -1,6 +1,6 @@
-import {SvgSelection} from '../../../_types/svg/selection.types';
+import {SvgSelection} from '../../../types/svg';
 import {getComponentWrapperClassname} from '../../../data/util/getComponentWrapperClassname';
-import {SimulationElement} from '../../../_types/simulation/simulation.types';
+import {SimulationElement} from '../../../types/simulation';
 
 type Components = SimulationElement<any>[];
 export function svg_appendComponents<ComponentManagers extends Components>(svg: SvgSelection, components: ComponentManagers) {

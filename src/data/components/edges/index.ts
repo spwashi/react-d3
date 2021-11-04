@@ -1,10 +1,10 @@
-import {SimulationData} from '../../_types/data.types';
-import {SvgSelection} from '../../../_types/svg/selection.types';
+import {SimulationData} from '../../types';
+import {SvgSelection} from '../../../types/svg';
 import {EDGE_COMPONENT_NAME} from './constants';
 import {svg_selectEdgeLines, svg_selectEdges} from './selectors/svg';
 import styleLines from './style';
-import {SimulationElement} from '../../../_types/simulation/simulation.types';
-import {D3EdgeSelection} from './_types/edge.types';
+import {SimulationElement} from '../../../types/simulation';
+import {D3EdgeSelection} from './types';
 import {Selection} from 'd3';
 
 type J = (s: Selection<any, any, any, any>) => any;

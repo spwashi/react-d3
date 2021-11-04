@@ -1,9 +1,9 @@
 import React, {useMemo, useRef} from 'react';
-import {NodeDatum} from './data/components/nodes/_types/node.types';
+import {NodeDatum} from './data/components/nodes/types';
 import {useAppConfig} from './app/components/config/hooks';
 import {AppWrapper} from './app/wrapper.styled';
 import {GlobalStyle} from './app/global.styled';
-import {EdgeDatum} from './data/components/edges/_types/edge.types';
+import {EdgeDatum} from './data/components/edges/types';
 import {useExampleNodes} from './util/hooks/useExampleNodes';
 import {useExampleEdges} from './useExampleEdges';
 import {defaultConfig} from './app/config/config';

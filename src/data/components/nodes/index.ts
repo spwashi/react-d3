@@ -1,13 +1,14 @@
 import {Selection} from 'd3';
-import {SimulationData} from '../../_types/data.types';
-import {NodeDatum, NodeDatumSelection} from './_types/node.types';
-import {SimulationElement} from '../../../_types/simulation/simulation.types';
-import {SvgSelection} from '../../../_types/svg/selection.types';
+import {SimulationData} from '../../types';
+import {NodeDatum, NodeDatumSelection} from './types';
+import {SimulationElement} from '../../../types/simulation';
+import {SvgSelection} from '../../../types/svg';
 import {NODE_COMPONENT_NAME} from './constants';
 import {svg_selectCircles, svg_selectNodes} from './selectors/svg';
-import {d_selectFill, d_selectRadius, d_selectX, d_selectY} from './selectors/datum';
+import {d_selectRadius, d_selectX, d_selectY} from './selectors/datum';
 import {addDragBehavior} from './behaviors/drag';
 import {addZoomBehavior} from './behaviors/zoom';
+import styleNodes from './style';
 
 
 export const nodeComponent: SimulationElement<NodeDatumSelection> =
@@ -47,10 +48,6 @@ export const nodeComponent: SimulationElement<NodeDatumSelection> =
                          addDragBehavior(circles);
                      },
                      tick: (svg: SvgSelection) => {
-                         svg_selectCircles(svg)
-                             .attr('cx', d_selectX)
-                             .attr('cy', d_selectY)
-                             .attr('fill', d_selectFill)
-                             .attr('r', d_selectRadius)
+                         styleNodes(svg_selectCircles(svg))
                      },
                  });

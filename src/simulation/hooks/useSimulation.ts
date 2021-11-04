@@ -3,8 +3,8 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useRootSvg} from './useRootSvg';
 import {ViewBox} from '../../viz.types';
 import {initSimulation} from '../forces/init';
-import {SimulationElement, SimulationRoot} from '../../_types/simulation/simulation.types';
-import {SimulationData} from '../../data/_types/data.types';
+import {SimulationElement, SimulationRoot} from '../../types/simulation';
+import {SimulationData} from '../../data/types';
 import {ForceConfiguration} from '../forces/types';
 
 interface SimulationParameters {

@@ -1,4 +1,4 @@
-import {d_selectColor, d_selectSourceX, d_selectSourceY, d_selectStrokeWidth, d_selectTargetX, d_selectTargetY, Edge} from './selectors/datum';
+import {d_selectColor, d_selectSourceX, d_selectSourceY, d_selectStrokeWidth, d_selectTargetX, d_selectTargetY, Edge} from '../selectors/datum';
 import {Selection} from 'd3-selection';
 import {BaseType} from 'd3';
 

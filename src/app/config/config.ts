@@ -10,8 +10,8 @@ export const defaultConfig =
                      svgWidth:  {type: 'range', min: 0, max: 100000, step: .5, defaultState: 300},
                      svgHeight: {type: 'range', min: 0, max: 100000, step: .5, defaultState: 300},
 
-                     offsetX: {type: 'range', min: -10000, max: 10000, step: .5, defaultState: -125},
-                     offsetY: {type: 'range', min: -10000, max: 10000, step: .5, defaultState: -125},
+                     offsetX: {type: 'range', min: -10000, max: 10000, step: 1, defaultState: -125},
+                     offsetY: {type: 'range', min: -10000, max: 10000, step: 1, defaultState: -125},
 
 
                      // Node Properties

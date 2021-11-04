@@ -1,7 +1,7 @@
 import {Simulation} from 'd3';
-import {NodeDatum} from '../../data/components/nodes/_types/node.types';
-import {SimulationData} from '../../data/_types/data.types';
-import {EdgeDatum} from '../../data/components/edges/_types/edge.types';
+import {NodeDatum} from '../../data/components/nodes/types';
+import {SimulationData} from '../../data/types';
+import {EdgeDatum} from '../../data/components/edges/types';
 
 type NumberRange = { max: number, min: number };
 

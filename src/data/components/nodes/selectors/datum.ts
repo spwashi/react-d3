@@ -1,4 +1,4 @@
-import {NodeDatum} from '../_types/node.types';
+import {NodeDatum} from '../types';
 
 export const d_selectX      = (d: NodeDatum | undefined) => !isNaN(d?.x ?? 10) ? d?.x ?? 10 : 10;
 export const d_selectY      = (d: NodeDatum | undefined) => !isNaN(d?.fy ?? d?.y ?? 10) ? d?.fy ?? d?.y ?? 10 : 10;
