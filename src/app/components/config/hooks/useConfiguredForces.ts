@@ -55,6 +55,7 @@ export function useConfiguredForces(config: VizConfigState) {
                         center:       doCenter,
                         nodeCharge:   nodeCharge,
                         edgeStrength: edgeStrength,
+                        internal:     doInternal,
                     },
                 );
             return forces;

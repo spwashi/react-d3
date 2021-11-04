@@ -1,7 +1,7 @@
 import {forceSimulation, Simulation} from 'd3';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useRootSvg} from './useRootSvg';
-import {ViewBox} from '../../viz.types';
+import {ViewBox} from '../../types/simulation/visualization';
 import {initSimulation} from '../forces/init';
 import {SimulationElement, SimulationRoot} from '../../types/simulation';
 import {SimulationData} from '../../data/types';
@@ -53,7 +53,7 @@ export function useSimulation(
           }          = simulationParameters;
     const key        = useMemo(() => { return Date.now(); },
                                // eslint-disable-next-line
-                               [data.nodes, data.edges]);
+                               [...Object.values(data)]);
     const root       = useRootSvg<SimulationElement<any>[]>({viewBox, data, components}, key);
     const simulation = useSimulationLifecycle(root, forces, data, key);
     useEffect(() => { simulation?.alphaTarget(.9).restart(); }, [forces, simulation, viewBox])

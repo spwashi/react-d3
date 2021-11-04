@@ -1,8 +1,8 @@
-import {VizConfigState} from '../../app/components/config/config/types';
+import {VizConfigState} from '../../../../app/components/config/config/types';
 import {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
-import {NodeDatum} from '../../data/components/nodes/types';
+import {NodeDatum} from '../../../../data/components/nodes/types';
 import {interpolateBlues} from 'd3';
-import {readConfig} from '../../app/components/config/util/read';
+import {readConfig} from '../../../../app/components/config/util/read';
 
 export function useRandomNodes(config: VizConfigState) {
     const x_quantization                = Math.PI * 10;

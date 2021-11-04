@@ -8,10 +8,11 @@ import {NodeDatum} from '../../../data/components/nodes/types';
  * @param simulation
  */
 export function internal({config, data, simulation}: ForceCallbackParams) {
-    const nodes = data.nodes;
     if (config.options.internal) {
         simulation = simulation.force('corrective',
                                       function correctiveForce() {
+                                          const nodes = data.nodes;
+
                                           if (typeof nodes === 'undefined') return
                                           let i = 0, n = nodes.length;
 
@@ -20,7 +21,7 @@ export function internal({config, data, simulation}: ForceCallbackParams) {
                                               let forces      = curr_node.forces;
                                               let boundary    = forces?.inclination;
                                               if (!boundary) continue;
-                                              boundary();
+                                              boundary(curr_node);
                                           }
                                       })
 

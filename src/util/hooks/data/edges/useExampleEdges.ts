@@ -1,8 +1,8 @@
-import {NodeDatum} from './data/components/nodes/types';
-import {EdgeDatum} from './data/components/edges/types';
+import {NodeDatum} from '../../../../data/components/nodes/types';
+import {EdgeDatum} from '../../../../data/components/edges/types';
 import {useEffect, useMemo} from 'react';
-import {VizConfigState} from './app/components/config/config/types';
-import {readConfig} from './app/components/config/util/read';
+import {VizConfigState} from '../../../../app/components/config/config/types';
+import {readConfig} from '../../../../app/components/config/util/read';
 
 export function useExampleEdges(config: VizConfigState, map: Map<any, NodeDatum>) {
     const list: EdgeDatum[] = useMemo(
@@ -11,9 +11,8 @@ export function useExampleEdges(config: VizConfigState, map: Map<any, NodeDatum>
             const edges =
                       Array.from(Array(n))
                            .flatMap((i, k) => [
-                               {source: k, target: Math.abs((k - 2))},
-                               {source: k, target: 1},
-                               k % 2 ? {source: k, target: k + 2} : false,
+                               {source: k, target: Math.abs((2 * k))},
+                               {source: k, target: Math.abs((3 * k))},
                            ]).filter(Boolean) as EdgeDatum[];
 
 

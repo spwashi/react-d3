@@ -1,9 +1,11 @@
-import {VizConfigState} from '../../app/components/config/config/types';
+import {VizConfigState} from '../../../../app/components/config/config/types';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {NodeDatum} from '../../data/components/nodes/types';
-import {readConfig} from '../../app/components/config/util/read';
+import {NodeDatum} from '../../../../data/components/nodes/types';
+import {readConfig} from '../../../../app/components/config/util/read';
 import {interpolateBlues} from 'd3';
-import {useDebounce} from './useDebounce';
+import {useDebounce} from '../../useDebounce';
+import {ClusterDatum} from '../../../../data/components/clusters/types';
+import {cluster_selectXCorrection, cluster_selectYCorrection} from '../../../../data/components/clusters/selectors/datum';
 
 function calculateRadius(config: VizConfigState, n: { [k: string]: any } | null = null) {
     const c = readConfig(config.radius) ?? 0;
@@ -12,15 +14,14 @@ function calculateRadius(config: VizConfigState, n: { [k: string]: any } | null 
     }
     return c;
 }
-export function useExampleNodes(config: VizConfigState) {
+export function useExampleNodes(config: VizConfigState, clusterMap: Map<any, ClusterDatum>) {
     const [nodeData, saveNodes]         = useState([] as NodeDatum[]);
     const [activeNodes, setActiveNodes] = useState<NodeDatum[]>(nodeData);
     const [map, setMap]                 = useState(() => new Map());
     const interpolator                  = useMemo(() => interpolateBlues, [])
     const n                             = useDebounce(readConfig(config.n, 1000), 500);
     const [prevN, setPrevN]             = useState<null | number>(null);
-
-    const setN =
+    const setN                          =
               useCallback(
                   () => {
                       setPrevN(n);
@@ -51,12 +52,21 @@ export function useExampleNodes(config: VizConfigState) {
             nodeData.push(
                 ...Array.from((Array((_n ?? 1) - length)))
                         .map((i, k) => {
-                            return {
+                            let d: NodeDatum;
+                            d = {
                                 id:           k + length,
+                                forces:       {
+                                    inclination(d) {
+                                        d.x = d.x ?? 0;
+                                        d.x = cluster_selectXCorrection(d?.cluster, d.x);
+                                        d.y = cluster_selectYCorrection(d?.cluster, d.y ?? 0);
+                                    },
+                                },
                                 r:            calculateRadius(config, {id: k}),
                                 color:        k === 3 ? '#42a5c3' : interpolator(1),
                                 dragBehavior: {savePos: true},
-                            } as NodeDatum;
+                            };
+                            return d as NodeDatum;
                         }),
             );
             const map = new Map();
@@ -79,11 +89,14 @@ export function useExampleNodes(config: VizConfigState) {
     useEffect(
         () => {
             activeNodes.forEach(node => {
-                node.r = calculateRadius(config, node);
+                node.r       = calculateRadius(config, node);
+                node.cluster = clusterMap.get((node.id ?? 1) % clusterMap.size) ?? undefined;
+                node.cluster?.nodes?.add(node);
+
                 return node;
             });
         },
-        [config, activeNodes, activeNodes.length],
+        [config, activeNodes, activeNodes.length, clusterMap],
     );
     return {
         map,

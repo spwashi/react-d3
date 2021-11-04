@@ -13,6 +13,8 @@ type VizConfigDefaults =
     {
         n: VizConfigItem<number>,
         radius: VizConfigItem<number>,
+        clusterN: VizConfigItem<number>,
+        clusterRadius: VizConfigItem<number>,
         edgeStrength: VizConfigItem<number>,
         edgeWidth: VizConfigItem<number>,
         nodeStrength: VizConfigItem<number>,

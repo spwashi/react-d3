@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {VizConfigItem, VizConfigState} from '../config/types';
-import {InputWidget} from './input/factory';
+import InputWidgetFactory from './input/InputWidgetFactory';
 import {useLocalStorage} from '../../../../util/hooks/useLocalStorage';
 
 type Props = {
@@ -26,11 +26,11 @@ export function ConfigWidget({config, updateValues}: Props) {
                     ? Object.entries(config)
                             .map(([index, item]) => {
                                 if (!item) return null;
-                                return <InputWidget value={item.state ?? item.defaultState}
-                                                    index={index}
-                                                    key={index}
-                                                    item={item}
-                                                    onChange={val => update(index as keyof VizConfigState, val)}/>;
+                                return <InputWidgetFactory value={item.state ?? item.defaultState}
+                                                           index={index}
+                                                           key={index}
+                                                           item={item}
+                                                           onChange={val => update(index as keyof VizConfigState, val)}/>;
                             })
                     : null
                 }

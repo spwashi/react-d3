@@ -26,6 +26,7 @@ export const nodeComponent: SimulationElement<NodeDatumSelection> =
                                                                 .classed('node-wrapper', true)
                                                                 .attr('data-nodeID', d => `${d.id}`)
                                                                 .append('circle');
+                                       wrapper.on('click', console.log)
                                        wrapper
                                            .attr('cx', (d) => d_selectX(d as NodeDatum))
                                            .attr('r', ((d) => d_selectRadius(d as NodeDatum) || 10))

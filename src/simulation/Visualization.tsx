@@ -1,12 +1,12 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {ViewBox} from '../viz.types';
+import {ViewBox} from '../types/simulation/visualization';
 import {useSimulation} from './hooks/useSimulation';
 import {SimulationElement} from '../types/simulation';
-import {NodeDatum} from '../data/components/nodes/types';
 import {ForceConfiguration} from './forces/types';
+import {SimulationData} from '../data/types';
 
 type VizParams = {
-    data: { nodes: NodeDatum[] },
+    data: SimulationData,
     components: SimulationElement<any>[]
     className?: string,
     forces?: ForceConfiguration;

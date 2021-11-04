@@ -23,7 +23,7 @@ function EnumInput({value, onChange, options}: { value: any, onChange: (state: a
     )
 }
 
-export function InputWidget({item, value, index, onChange}: InputItemParams) {
+export default function InputWidgetFactory({item, value, index, onChange}: InputItemParams) {
     const {type} = item;
     let valueComponent: JSX.Element | any;
     let inputComponent: JSX.Element | any;

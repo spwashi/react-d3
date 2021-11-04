@@ -1,5 +1,5 @@
 import {VizConfigState} from '../config/types';
-import {ViewBox} from '../../../../viz.types';
+import {ViewBox} from '../../../../types/simulation/visualization';
 import {useEffect, useMemo} from 'react';
 import {readConfig} from '../util/read';
 import {useLocalStorage} from '../../../../util/hooks/useLocalStorage';

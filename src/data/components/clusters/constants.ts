@@ -1,0 +1,1 @@
+export const CLUSTER_COMPONENT_NAME = 'clusters';

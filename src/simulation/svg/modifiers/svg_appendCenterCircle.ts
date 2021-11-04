@@ -1,5 +1,5 @@
 import {SvgSelection} from '../../../types/svg';
-import {ViewBox} from '../../../viz.types';
+import {ViewBox} from '../../../types/simulation/visualization';
 
 export function svg_appendCenterCircle(svg: SvgSelection, viewBox: ViewBox) {
     const [, , width] = viewBox;

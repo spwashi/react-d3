@@ -1,5 +1,5 @@
 import {SvgSelection} from '../../../types/svg';
-import {ViewBox} from '../../../viz.types';
+import {ViewBox} from '../../../types/simulation/visualization';
 import {zoom} from 'd3-zoom';
 
 export function svg_addZoomBehavior(svg: SvgSelection, viewBox: ViewBox) {
@@ -7,7 +7,6 @@ export function svg_addZoomBehavior(svg: SvgSelection, viewBox: ViewBox) {
     svg.call(
         zoom<any, any>()
             .extent([[0, 0], [width, height]])
-            .scaleExtent([1, 8])
             .on('zoom', ({transform}) => {
                 svg.selectAll('g.wrapper').attr('transform', transform);
             }),

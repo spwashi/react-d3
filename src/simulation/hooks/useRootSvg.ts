@@ -2,7 +2,7 @@ import {create} from 'd3';
 import {useEffect, useMemo} from 'react';
 import {SimulationData} from '../../data/types';
 import {SimulationElement, SimulationRoot} from '../../types/simulation';
-import {ViewBox} from '../../viz.types';
+import {ViewBox} from '../../types/simulation/visualization';
 import {SvgSelection} from '../../types/svg';
 import {svg_appendCenterCircle} from '../svg/modifiers/svg_appendCenterCircle';
 import {svg_appendComponents} from '../svg/modifiers/svg_appendComponents';

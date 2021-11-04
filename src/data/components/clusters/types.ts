@@ -1,35 +1,35 @@
 import {BaseType, D3DragEvent, D3ZoomEvent} from 'd3';
 import {SvgComponentSelection} from '../../../types/svg';
-import {ClusterDatum} from '../clusters/types';
+import {NodeDatum} from '../nodes/types';
 
 export type DatumDragBehavior = {
     locked?: boolean;
-    drag?: (event: D3DragEvent<any, any, any>, d: NodeDatum) => void
-    release?: (event: D3DragEvent<any, any, any>, d: NodeDatum) => void
+    drag?: (event: D3DragEvent<any, any, any>, d: ClusterDatum) => void
+    release?: (event: D3DragEvent<any, any, any>, d: ClusterDatum) => void
     savePos?: boolean;
 };
 export type DatumScrollBehavior = {
     savePos?: boolean;
-    scroll?: (event: D3ZoomEvent<any, any>, d: NodeDatum) => void
-    release?: (event: D3DragEvent<any, any, any>, d: NodeDatum) => void
+    scroll?: (event: D3ZoomEvent<any, any>, d: ClusterDatum) => void
+    release?: (event: D3DragEvent<any, any, any>, d: ClusterDatum) => void
 };
 
 export type DatumForceConfiguration = {
     electronegativity?: number;
-    inclination?: (d: NodeDatum) => void
+    inclination?: () => void
 };
 export type X = number;
 export type Y = number;
 export type Id = number;
 export type Radius = number;
-export type NodeDatumSelection<T extends BaseType = SVGGElement> = SvgComponentSelection<T, NodeDatum>;
-export type NodeDatum =
+export type ClusterDatumSelection<T extends BaseType = SVGGElement> = SvgComponentSelection<T, ClusterDatum>;
+export type ClusterDatum =
     {
+        nodes?: Set<NodeDatum>;
         color?: string;
         stroke?: string;
 
-        cluster?: ClusterDatum;
-
+        r?: Radius,
         x?: X,
         y?: Y,
 
@@ -44,7 +44,6 @@ export type NodeDatum =
         _fx?: X,
         _fy?: Y,
 
-        r?: Radius,
 
         id?: Id,
 
@@ -58,5 +57,5 @@ export type NodeDatum =
         reset?: () => void;
         click?: (event?: MouseEvent | any) => void;
 
-        [k: string]: any;
+        [k:string]: any;
     };
