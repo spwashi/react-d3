@@ -1,5 +1,5 @@
 import {BaseType, drag as d3drag, Selection} from 'd3';
-import {NodeDatum} from '../types';
+import {NodeDatum} from '../types/types';
 
 export function addDragBehavior(selection: Selection<BaseType, any, BaseType, any>) {
     const dragBehavior =

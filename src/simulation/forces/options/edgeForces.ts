@@ -1,7 +1,7 @@
 import {ForceCallbackParams} from '../types';
 import {forceLink} from 'd3';
-import {NodeDatum} from '../../../data/components/nodes/types';
-import {EdgeDatum} from '../../../data/components/edges/types';
+import {NodeDatum} from '../../../data/components/nodes/types/types';
+import {EdgeDatum} from '../../../data/components/edges/types/types';
 
 export function edgeForces({config, data, simulation}: ForceCallbackParams) {
     {

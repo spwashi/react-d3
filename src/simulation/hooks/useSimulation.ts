@@ -26,14 +26,15 @@ function useSimulationLifecycle(root: SimulationRoot<SimulationElement<any>[]>, 
     const [simulation, setSimulation] = useState<Simulation<any, any>>();
     const tick                        = useCallback(() => root.components.forEach(component => component.tick(root.svg)),
                                                     [root]);
-    const starterSimulation           = useMemo(() => {return forceSimulation(data.nodes)}, [data.nodes, ...Object.values(config || {})]);
+    const starterSimulation           = useMemo(() => {return forceSimulation(data.nodes)}, [data.nodes]);
     const refresh                     = useCallback(
-        () =>
+        () => {
             setSimulation(
                 initSimulation(starterSimulation, {config, data, tick}),
-            ),
-        [config, data, tick, starterSimulation]);
-    useEffect(refresh, [dataChangeKey, config, refresh]);
+            );
+        },
+        [data, tick, starterSimulation]);
+    useEffect(refresh, [dataChangeKey, refresh]);
     return simulation;
 }
 
@@ -44,7 +45,10 @@ function useSimulationLifecycle(root: SimulationRoot<SimulationElement<any>[]>, 
  */
 export function useSimulation(
     simulationParameters: SimulationParameters,
-): SVGElement | null {
+): {
+    svg: SVGElement | null,
+    simulation?: Simulation<any, any>
+} {
     const {
               viewBox,
               data,
@@ -56,6 +60,10 @@ export function useSimulation(
                                [...Object.values(data)]);
     const root       = useRootSvg<SimulationElement<any>[]>({viewBox, data, components}, key);
     const simulation = useSimulationLifecycle(root, forces, data, key);
-    useEffect(() => { simulation?.alphaTarget(.9).restart(); }, [forces, simulation, viewBox])
-    return root.svg ? root.svg.node() : null;
+    useEffect(() => { simulation?.alphaTarget(.2).restart(); }, [forces, simulation, viewBox])
+    useEffect(() => { simulation?.velocityDecay(forces?.options.velocityDecay ?? .2); }, [forces?.options.velocityDecay])
+    return {
+        svg: root.svg ? root.svg.node() : null,
+        simulation,
+    };
 }

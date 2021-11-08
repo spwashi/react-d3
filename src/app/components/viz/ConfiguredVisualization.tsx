@@ -10,9 +10,10 @@ interface AppVizParams {
     components: SimulationElement<any>[]
     data: SimulationData;
     config: VizConfigState;
+    appName?: string;
 }
 
-export function ConfiguredVisualization({data, config, components}: AppVizParams) {
+export function ConfiguredVisualization({data, config, components, appName}: AppVizParams) {
     const viewBox              = useConfiguredViewBox(config);
     const forces               = useConfiguredForces(config);
     const {width, height}      = useConfiguredSize(config);
@@ -24,7 +25,7 @@ export function ConfiguredVisualization({data, config, components}: AppVizParams
     return (
         <div className="viz-wrapper">
             <div className="viz-wrapper-inner" style={innerVizWrapperStyle}>
-                <Visualization viewBox={viewBox} data={data} components={components} forces={forces}/>
+                <Visualization viewBox={viewBox} data={data} components={components} forces={forces} appName={appName}/>
             </div>
         </div>
     );

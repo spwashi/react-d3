@@ -1,9 +1,9 @@
-import {NodeDatumSelection} from '../types';
-import {d_selectFill, d_selectRadius, d_selectX, d_selectY} from '../selectors/datum';
+import {NodeDatumSelection} from '../types/types';
+import {node_selectFill, node_selectRadius, node_selectX, node_selectY} from '../selectors/datum';
 
-export default function styleNodes(selection: NodeDatumSelection) {
-    return selection.attr('cx', d_selectX)
-                    .attr('cy', d_selectY)
-                    .attr('fill', d_selectFill)
-                    .attr('r', d_selectRadius)
+export default function nodeSelection_style(selection: NodeDatumSelection) {
+    return selection.attr('cx', node_selectX)
+                    .attr('cy', node_selectY)
+                    .attr('fill', node_selectFill)
+                    .attr('r', node_selectRadius)
 }

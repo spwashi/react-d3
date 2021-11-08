@@ -1,1 +1,1 @@
-export const CLUSTER_COMPONENT_NAME = 'clusters';
+export const COMPONENT_NAME = 'clusters';

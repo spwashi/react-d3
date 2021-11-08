@@ -1,5 +1,5 @@
 import {BaseType, drag as d3drag, Selection} from 'd3';
-import {ClusterDatum} from '../types';
+import {ClusterDatum} from '../types/types';
 
 export function addDragBehavior(selection: Selection<BaseType, any, BaseType, any>) {
     const dragBehavior =
@@ -17,6 +17,7 @@ export function addDragBehavior(selection: Selection<BaseType, any, BaseType, an
                   })
                   .on('end', (event, d: ClusterDatum) => {
                       event.sourceEvent.stopPropagation();
+                      d.dragBehavior?.release && d.dragBehavior.release(event, d)
                   });
     selection.call(dragBehavior);
 }

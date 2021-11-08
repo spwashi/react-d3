@@ -1,33 +1,50 @@
-import {ClusterDatum} from '../types';
+import {ClusterDatum} from '../types/types';
+import {NodeDatum} from '../../nodes/types/types';
 
 export const cluster_selectX      = (d: ClusterDatum | undefined) => !isNaN(d?.fx ?? d?.x ?? 10) ? d?.fx ?? d?.x ?? 10 : 10;
 export const cluster_selectY      = (d: ClusterDatum | undefined) => !isNaN(d?.fy ?? d?.y ?? 10) ? d?.fy ?? d?.y ?? 10 : 10;
-export const cluster_selectRadius = (d: ClusterDatum | undefined) => !isNaN(d?.r ?? 10) ? Math.max(d?.r ?? 1, 0) : 10;
+export const cluster_selectRadius = (d: ClusterDatum | undefined) => !isNaN(d?.r ?? 10) ? Math.max((d?.r ?? 1) * Math.abs((d?.forces?.electronegativity ?? -1)), 50) : 10;
 export const cluster_selectFill   = (d: ClusterDatum | undefined) => {
     const e = d?.forces?.electronegativity ?? 0;
-    return 'rgba(' + (e >= 0 ? '0,0,0' : '255,255,255') + ',' + Math.abs(e / 100) + ')';
+    return 'rgba(' + (e >= 0 ? '0,0,0' : '255,255,255') + ',' + Math.abs(e / 10) + ')';
 };
-function correct(d: ClusterDatum, target: number, n: number) {
-    const diff             = n - target;
-    const correctiveFactor = ((d.forces?.electronegativity ?? 0));
-    const shouldRepel      = correctiveFactor < 0;
-    const distance         = (d.r ?? 1) * 1.2;
-    const isWrongDistance  = Math.abs(diff) > distance;
+export const cluster_correctNode  =
+                 (cluster: ClusterDatum | undefined, d: NodeDatum) => {
+                     d.x = d.x ?? 0;
+                     d.r = d.r ?? 0;
+                     d.y = d.y ?? 0;
+                     if (!cluster) return;
 
-    const same = ((n || 1) / (target || 1)) > 0;
+                     cluster.r = cluster.r ?? 0;
+                     cluster.x = cluster.x ?? 0;
+                     cluster.y = cluster.y ?? 0;
 
-    if (!isWrongDistance) return n;
+                     const diffX = (cluster.x ?? 0) - d.x;
+                     const diffY = (cluster.y ?? 0) - d.y;
 
-    return target;
+                     const charge = (cluster.forces?.electronegativity ?? 0);
+                     if (charge === 0) return;
+                     const chargeSign = charge > 0 ? 1 : -1;
+                     const maxDist    = Math.max(1, (cluster.r + d.r) * -charge);
 
-}
-export const cluster_selectXCorrection =
-                 (d: ClusterDatum | undefined, n: number) => {
-                     if (!d) return n;
-                     return correct(d, d.x ?? 0, n);
-                 };
-export const cluster_selectYCorrection =
-                 (d: ClusterDatum | undefined, n: number) => {
-                     if (!d) return n;
-                     return correct(d, d.y ?? 0, n);
+                     const multiplier = 10;
+                     if (chargeSign < 0) {
+                         if (Math.abs(diffX) > Math.abs(maxDist)) {
+                             const curr = d.x;
+                             d.x        = curr + (diffX / maxDist) * -charge * multiplier
+                         }
+                         if (Math.abs(diffY) > Math.abs(maxDist)) {
+                             const curr = d.y;
+                             d.y        = curr + (diffY / maxDist) * -charge * multiplier;
+                         }
+                     } else {
+                         if (Math.abs(diffX) < Math.abs(maxDist)) {
+                             const curr = d.x;
+                             d.x        = curr - (diffX / maxDist) * -charge * multiplier;
+                         }
+                         if (Math.abs(diffY) < Math.abs(maxDist)) {
+                             const curr = d.y;
+                             d.y        = curr - (diffY / maxDist) * -charge * multiplier;
+                         }
+                     }
                  };

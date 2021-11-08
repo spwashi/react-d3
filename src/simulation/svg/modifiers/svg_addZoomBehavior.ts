@@ -1,14 +1,16 @@
 import {SvgSelection} from '../../../types/svg';
-import {ViewBox} from '../../../types/simulation/visualization';
-import {zoom} from 'd3-zoom';
+import {zoom, ZoomTransform} from 'd3-zoom';
 
-export function svg_addZoomBehavior(svg: SvgSelection, viewBox: ViewBox) {
-    const [, , width, height] = viewBox;
-    svg.call(
-        zoom<any, any>()
-            .extent([[0, 0], [width, height]])
-            .on('zoom', ({transform}) => {
-                svg.selectAll('g.wrapper').attr('transform', transform);
-            }),
-    )
+export function svg_addZoomBehavior(
+    svg: SvgSelection,
+    transform: Partial<ZoomTransform>,
+    updateTransform: (t: Partial<ZoomTransform>) => void,
+) {
+    const zoomBehavior = zoom<any, any>()
+        .on('zoom', ({transform}) => {
+            const {k, x, y} = transform;
+            updateTransform({k, x, y});
+        });
+    zoomBehavior.transform(svg, new ZoomTransform(transform.k ?? 0, transform.x ?? 0, transform.y ?? 0));
+    svg.call(zoomBehavior)
 }

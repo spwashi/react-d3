@@ -13,15 +13,15 @@ import {useDebounce} from '../../../../util/hooks/useDebounce';
 export function useConfiguredForces(config: VizConfigState) {
     const forces: ForceConfiguration = useMemo(() => ({forces: [], options: {}}), []);
 
-    const collisionForce  = useDebounce(readConfig(config.collisionForce, 0), 200);
-    const doCenter        = useDebounce(readConfig(config.useCenteringForce, 0), 200);
-    const doInternal      = useDebounce(readConfig(config.useInternalForce, 0), 200);
+    const collisionForce  = useDebounce(readConfig(config.collisionForce, !!0), 200);
+    const doCenter        = useDebounce(readConfig(config.useCenteringForce, !!0), 200);
+    const doInternal      = useDebounce(readConfig(config.useInternalForce, !!0), 200);
     const edgeStrength    = useDebounce(readConfig(config.edgeStrength, 0), 200);
     const height          = useDebounce(readConfig(config.svgHeight), 200);
     const nodeCharge      = useDebounce(readConfig(config.nodeStrength, 0), 200);
-    const useBoundingBox  = readConfig(config.useBoundingBox, 0);
-    const useEdgeStrength = readConfig(config.useEdgeStrength, 0);
-    const useNodeStrength = readConfig(config.useNodeStrength, 0);
+    const useBoundingBox  = readConfig(config.useBoundingBox, false);
+    const useEdgeStrength = readConfig(config.useEdgeStrength, false);
+    const useNodeStrength = readConfig(config.useNodeStrength, false);
     const width           = useDebounce(readConfig(config.svgWidth), 200);
 
     return useMemo(
@@ -39,23 +39,24 @@ export function useConfiguredForces(config: VizConfigState) {
 
             forces.forces =
                 [
-                    useNodeStrength && nodeCharge && nodeForces,
-                    useEdgeStrength && edgeStrength && edgeForces,
-                    doCenter && center,
-                    doInternal && internal,
-                    collisionForce && collision,
-                    useBoundingBox && bounding,
-                ].filter(i => !!i) as Force[];
+                    (useNodeStrength && !!nodeCharge && nodeForces) as Force | false,
+                    (useEdgeStrength && !!edgeStrength && edgeForces) as Force | false,
+                    (doCenter && center) as Force | false,
+                    (doInternal && internal) as Force | false,
+                    (collisionForce && collision) as Force | false,
+                    (useBoundingBox && bounding) as Force | false,
+                ].filter(Boolean) as Force[];
 
             Object
                 .assign(
                     forces.options,
                     {
-                        bounding:     layout,
-                        center:       doCenter,
-                        nodeCharge:   nodeCharge,
-                        edgeStrength: edgeStrength,
-                        internal:     doInternal,
+                        bounding:      layout,
+                        center:        doCenter,
+                        nodeCharge:    nodeCharge,
+                        edgeStrength:  edgeStrength,
+                        internal:      doInternal,
+                        velocityDecay: readConfig(config.velocityDecay, 0) / 100,
                     },
                 );
             return forces;

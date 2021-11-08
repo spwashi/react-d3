@@ -1,7 +1,7 @@
 import {Simulation} from 'd3';
-import {NodeDatum} from '../../data/components/nodes/types';
-import {SimulationData} from '../../data/types';
-import {EdgeDatum} from '../../data/components/edges/types';
+import {NodeDatum} from '../../../data/components/nodes/types/types';
+import {SimulationData} from '../../../data/types';
+import {EdgeDatum} from '../../../data/components/edges/types/types';
 
 type NumberRange = { max: number, min: number };
 
@@ -19,6 +19,7 @@ export interface ForceConfiguration {
         internal?: boolean;
         nodeCharge?: number;
         edgeStrength?: number;
+        velocityDecay?: number;
         bounding?: BoundingForceConfig
     };
     forces: Force[]

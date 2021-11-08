@@ -1,7 +1,7 @@
 import {SvgSelection} from '../../../types/svg';
 import {ViewBox} from '../../../types/simulation/visualization';
 
-export function svg_appendCenterCircle(svg: SvgSelection, viewBox: ViewBox) {
+export function svg_appendCenterMark(svg: SvgSelection, viewBox: ViewBox) {
     const [, , width] = viewBox;
 
     const outer =
@@ -15,9 +15,10 @@ export function svg_appendCenterCircle(svg: SvgSelection, viewBox: ViewBox) {
 
     outer.append('text')
          .style('fill', 'black')
-         .style('opacity', '.3')
-         .text('0 , 0')
+         .style('opacity', '1')
+         .text('+')
          .attr('text-anchor', 'middle')
-         .attr('font-size', (width - viewBox[0]) / 100)
+         .attr('dominant-baseline', 'central')
+         .attr('font-size', (width - viewBox[0]) / 5)
          .attr('font-family', 'monospace')
 }

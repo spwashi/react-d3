@@ -1,9 +1,9 @@
 import {Selection} from 'd3';
 import {SimulationData} from '../../types';
-import {ClusterDatum, ClusterDatumSelection} from './types';
+import {ClusterDatum, ClusterDatumSelection} from './types/types';
 import {SimulationElement} from '../../../types/simulation';
 import {SvgSelection} from '../../../types/svg';
-import {CLUSTER_COMPONENT_NAME} from './constants';
+import {COMPONENT_NAME} from './constants';
 import {svg_selectCircles, svg_selectClusters} from './selectors/svg';
 import {cluster_selectRadius, cluster_selectX, cluster_selectY} from './selectors/datum';
 import {addDragBehavior} from './behaviors/drag';
@@ -13,7 +13,7 @@ import styleClusters from './style';
 
 export const clusterComponent: SimulationElement<ClusterDatumSelection> =
                  ({
-                     name: CLUSTER_COMPONENT_NAME,
+                     name: COMPONENT_NAME,
                      update(svg: SvgSelection, data: SimulationData) {
                          if (!data.clusters) return;
                          const clusters    = svg_selectClusters(svg)

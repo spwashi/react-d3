@@ -1,6 +1,6 @@
 import {BaseType, D3DragEvent, D3ZoomEvent} from 'd3';
-import {SvgComponentSelection} from '../../../types/svg';
-import {ClusterDatum} from '../clusters/types';
+import {SvgComponentSelection} from '../../../../types/svg';
+import {ClusterDatum} from '../../clusters/types/types';
 
 export type DatumDragBehavior = {
     locked?: boolean;

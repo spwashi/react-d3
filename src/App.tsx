@@ -1,55 +1,62 @@
-import React, {useMemo, useRef} from 'react';
-import {NodeDatum} from './data/components/nodes/types';
+import React, {useEffect} from 'react';
 import {useAppConfig} from './app/components/config/hooks';
 import {AppWrapper} from './app/wrapper.styled';
 import {GlobalStyle} from './app/global.styled';
-import {EdgeDatum} from './data/components/edges/types';
-import {useExampleNodes} from './util/hooks/data/nodes/useExampleNodes';
-import {useExampleEdges} from './util/hooks/data/edges/useExampleEdges';
 import {defaultConfig} from './app/config/config';
 import {AppConfig} from './app/components/config/components/AppConfig';
-import {ConfiguredVisualization} from './app/components/viz';
-import {dataComponents} from './data/components';
-import {useExampleClusters} from './util/hooks/data/clusters/useExampleClusters';
-import {SimulationData} from './data/types';
-import {ClusterDatum} from './data/components/clusters/types';
+import {ConfiguredVisualization} from './app/components/viz/ConfiguredVisualization';
+import {useData} from './useData';
 
 
 export {};
 
-function useApplication() {
-    const components          = dataComponents;
-    const [config, setConfig] = useAppConfig(defaultConfig);
-    const dataRef             = useRef({
-                                           nodes:    [] as NodeDatum[],
-                                           edges:    [] as EdgeDatum[],
-                                           clusters: [] as ClusterDatum[],
-                                       } as SimulationData);
-
-    const {list: clusterData, map: clusterMap} = useExampleClusters(config)
-    const {list: nodeData, map: nodeMap}       = useExampleNodes(config, clusterMap);
-    const {list: edgeData}                     = useExampleEdges(config, nodeMap)
-    const data                                 = useMemo(() => {
-        dataRef.current.nodes    = nodeData;
-        dataRef.current.edges    = edgeData;
-        dataRef.current.clusters = clusterData;
-        return dataRef.current;
-    }, [nodeData, edgeData, clusterData]);
-    return {components, config, setConfig, data};
-}
 /**
  *
  * @constructor
  */
 export function DefaultApplication() {
-    const {components, config, setConfig, data} = useApplication();
+    const appName             = 'viz';
+    const [config, setConfig] = useAppConfig(defaultConfig);
+    const {components, data}  = useData(config);
+
+    useEffect(() => {
+        const top    = window as any;
+        top[appName] = top[appName] ?? {};
+        Object.assign(top[appName], {
+            setConfig,
+
+            set: (name: Partial<typeof config> | keyof Partial<typeof config>, val: any) => {
+                if (typeof name === 'object') {
+                    let next = {} as Partial<typeof config> | any;
+                    Object.assign(next, config);
+                    Object.entries(name)
+                          .forEach(([name, val]) => {
+                              // @ts-ignore
+                              const vv   = config[name];
+                              next[name] = typeof vv === 'object' && vv ? {...vv, state: val} : val;
+                          })
+                    setConfig(next);
+                    return;
+                }
+
+                const vv = config[name];
+                setConfig({
+                              ...config,
+                              [name]: typeof vv === 'object' && vv ? {...vv, state: val} : val,
+                          })
+            },
+            config,
+            data,
+            components,
+        });
+    }, [config, data, components]);
 
     return (
         <AppWrapper className={'d3app-wrapper'}>
             <GlobalStyle/>
             <div className={'d3app-wrapper-inner'}>
                 <AppConfig config={config} setConfig={setConfig}/>
-                <ConfiguredVisualization data={data} config={config} components={components}/>
+                <ConfiguredVisualization data={data} config={config} components={components} appName={appName}/>
             </div>
         </AppWrapper>
     );

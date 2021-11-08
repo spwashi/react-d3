@@ -8,13 +8,21 @@ import {SvgSelection} from '../svg';
  */
 export interface SimulationElement<SelectionType, ItemData = any> {
     name: keyof SimulationData;
-    tick: (selection: SvgSelection) => void;
+    /**
+     * Called when data changes
+     *
+     * @param svg
+     * @param data
+     */
     update: (svg: SvgSelection, data: SimulationData) => void;
+    /**
+     * Called when the simulation "ticks"
+     *
+     * @param selection
+     */
+    tick: (selection: SvgSelection) => void;
 }
 
-/**
- * A collection of information about the SVG that's currently being constructed
- */
 export interface SimulationRoot<T extends SimulationElement<any>[] = []> {
     svg: SvgSelection;
     components: T

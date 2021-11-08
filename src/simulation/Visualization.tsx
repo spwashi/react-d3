@@ -10,26 +10,36 @@ type VizParams = {
     components: SimulationElement<any>[]
     className?: string,
     forces?: ForceConfiguration;
-    viewBox: ViewBox
+    viewBox: ViewBox;
+    appName?: string;
 };
 
 export const Visualization =
-                 ({data, forces, className, components, viewBox}: VizParams) => {
+                 ({data, forces, className, components, viewBox, appName='viz'}: VizParams) => {
                      const ref: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
 
-                     const simulation = useSimulation({data, forces, components, viewBox});
+                     const {svg, simulation} = useSimulation({data, forces, components, viewBox});
+
+                     useEffect(() => {
+                         const top          = window as any;
+                         top[appName]            = top[appName] ?? {};
+                         top[appName].simulation = simulation;
+                         return () => {
+                             top[appName].simulation = undefined;
+                         };
+                     }, [simulation]);
 
                      useEffect(() => {
                                    const div = ref.current;
-                                   if (!div || !simulation) return;
+                                   if (!div || !svg) return;
 
-                                   div.appendChild(simulation)
+                                   div.appendChild(svg);
                                    return () => {
-                                       div.removeChild(simulation)
-                                       simulation.remove();
+                                       div.removeChild(svg)
+                                       svg.remove();
                                    }
                                },
-                               [simulation]);
+                               [svg]);
 
                      const style = useMemo(() => ({
                          display:        'flex',

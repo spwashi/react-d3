@@ -18,20 +18,22 @@ type VizConfigDefaults =
         edgeStrength: VizConfigItem<number>,
         edgeWidth: VizConfigItem<number>,
         nodeStrength: VizConfigItem<number>,
-        useNodeStrength: VizConfigItem<number>,
-        useEdgeStrength: VizConfigItem<number>,
+        useNodeStrength: VizConfigItem<boolean>,
+        useEdgeStrength: VizConfigItem<boolean>,
         height: VizConfigItem<number>,
         width: VizConfigItem<number>,
         svgWidth: VizConfigItem<number>,
         svgHeight: VizConfigItem<number>,
         offsetX: VizConfigItem<number>,
         offsetY: VizConfigItem<number>,
-        useBoundingBox: VizConfigItem<number>,
+        useBoundingBox: VizConfigItem<boolean>,
         boundingOption: VizConfigItem<number>,
-        useCenteringForce: VizConfigItem<number>,
+        useCenteringForce: VizConfigItem<boolean>,
         collisionForce: VizConfigItem<number>,
-        useInternalForce: VizConfigItem<number>,
-        open: VizConfigItem,
+        useInternalForce: VizConfigItem<boolean>,
+
+        colorInterpolator?: (d: any) => string,
+        velocityDecay?: VizConfigItem<number>
     };
 
 export type VizConfigState = Partial<VizConfigDefaults>;

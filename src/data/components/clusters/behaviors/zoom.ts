@@ -1,6 +1,6 @@
 import {zoom as d3zoom} from 'd3-zoom';
 import {BaseType, D3ZoomEvent, select, Selection} from 'd3';
-import {ClusterDatum} from '../types';
+import {ClusterDatum} from '../types/types';
 
 export function addZoomBehavior(circles: Selection<BaseType, any, BaseType, any>) {
     const doZoom = true;

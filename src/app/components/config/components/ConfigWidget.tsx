@@ -2,11 +2,14 @@ import React, {useCallback} from 'react';
 import {VizConfigItem, VizConfigState} from '../config/types';
 import InputWidgetFactory from './input/InputWidgetFactory';
 import {useLocalStorage} from '../../../../util/hooks/useLocalStorage';
+import {isConfigWidget} from '../hooks';
 
 type Props = {
     config: VizConfigState,
     updateValues: (i: VizConfigState) => void
 };
+
+
 
 export function ConfigWidget({config, updateValues}: Props) {
     const [open, setOpen] = useLocalStorage('config is open', true);
@@ -26,6 +29,8 @@ export function ConfigWidget({config, updateValues}: Props) {
                     ? Object.entries(config)
                             .map(([index, item]) => {
                                 if (!item) return null;
+                                if (!isConfigWidget(item)) return null;
+
                                 return <InputWidgetFactory value={item.state ?? item.defaultState}
                                                            index={index}
                                                            key={index}

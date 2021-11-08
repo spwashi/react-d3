@@ -1,4 +1,4 @@
-import {ClusterDatumSelection} from '../types';
+import {ClusterDatumSelection} from '../types/types';
 import {cluster_selectFill, cluster_selectRadius, cluster_selectX, cluster_selectY} from '../selectors/datum';
 
 export default function styleNodes(selection: ClusterDatumSelection) {

@@ -1,8 +1,8 @@
 import {Simulation} from 'd3';
 import {SimulationData} from '../../data/types';
 import {ForceConfiguration} from './types';
-import {NodeDatum} from '../../data/components/nodes/types';
-import {EdgeDatum} from '../../data/components/edges/types';
+import {NodeDatum} from '../../data/components/nodes/types/types';
+import {EdgeDatum} from '../../data/components/edges/types/types';
 
 interface Params {
     config: ForceConfiguration | undefined;

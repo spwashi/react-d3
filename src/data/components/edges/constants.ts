@@ -1,1 +1,1 @@
-export const EDGE_COMPONENT_NAME = 'edges';
+export const COMPONENT_NAME = 'edges';
