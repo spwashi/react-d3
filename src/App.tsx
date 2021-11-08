@@ -5,7 +5,7 @@ import {GlobalStyle} from './app/global.styled';
 import {defaultConfig} from './app/config/config';
 import {AppConfig} from './app/components/config/components/AppConfig';
 import {ConfiguredVisualization} from './app/components/viz/ConfiguredVisualization';
-import {useData} from './useData';
+import {useData} from './data/hooks/useData';
 
 
 export {};

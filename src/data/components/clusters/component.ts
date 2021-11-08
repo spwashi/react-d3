@@ -33,7 +33,7 @@ export const clusterComponent: SimulationElement<ClusterDatumSelection> =
                                        })
                                        circles
                                            .attr('cx', (d) => cluster_selectX(d as ClusterDatum))
-                                           .attr('r', ((d) => cluster_selectRadius(d as ClusterDatum) || 10))
+                                           .attr('r', ((d) => cluster_selectRadius(d as ClusterDatum)))
                                            .attr('cy', (d) => cluster_selectY(d as ClusterDatum));
                                        return circles;
                                    };

@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {VizConfigItem, VizConfigState} from '../config/types';
 import InputWidgetFactory from './input/InputWidgetFactory';
-import {useLocalStorage} from '../../../../util/hooks/useLocalStorage';
+import {useLocalStorage} from '../../../../hooks/util/useLocalStorage';
 import {isConfigWidget} from '../hooks';
 
 type Props = {

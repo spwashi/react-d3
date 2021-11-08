@@ -3,12 +3,15 @@ import {useCallback, useEffect, useState} from 'react';
 import {NodeDatum} from '../types/types';
 import {readConfig} from '../../../../app/components/config/util/read';
 import {interpolateBlues} from 'd3';
-import {useDebounce} from '../../../../util/hooks/useDebounce';
+import {useDebounce} from '../../../../hooks/util/useDebounce';
 import {ClusterDatum} from '../../clusters/types/types';
 import {node_colorInit, node_init} from '../datum/init';
 
 function calculateRadius(config: VizConfigState, n: NodeDatum | null = null) {
     const c = readConfig(config.radius) ?? 0;
+    if (n?._r) {
+        return c * (+n._r);
+    }
     if (n?.id === 1) {
         return c;
     }
@@ -81,12 +84,13 @@ function useNodeClusterUpdate(activeNodes: NodeDatum[], config: VizConfigState, 
             const m = Math.floor(activeNodes.length / size);
 
             activeNodes.forEach(node => {
-                node.r        = calculateRadius(config, node);
-                node.cluster  = clusterMap.get(Math.floor((node.id ?? 0) / m)) ?? undefined;
-                const cluster = node.cluster;
+                node.r           = calculateRadius(config, node);
+                const hadCluster = !!(node.cluster && node.cluster.x);
+                node.cluster     = clusterMap.get(Math.floor((node.id ?? 0) / m)) ?? undefined;
+                const cluster    = node.cluster;
                 if (!cluster) return;
-                node.x = cluster.x;
-                node.y = cluster.y;
+                node.x = hadCluster ? node.x : cluster.x;
+                node.y = hadCluster ? node.y : cluster.y;
                 cluster.nodes?.add(node);
                 return node;
             });
@@ -95,8 +99,7 @@ function useNodeClusterUpdate(activeNodes: NodeDatum[], config: VizConfigState, 
     );
 }
 
-export function useNodes(config: VizConfigState, {map: clusterMap}: { map: Map<any, ClusterDatum> }) {
-    const [raw]       = useState([] as NodeDatum[]);
+export function useNodes(config: VizConfigState, raw: NodeDatum[], {map: clusterMap}: { map: Map<any, ClusterDatum> }) {
     const {list, map} = useNodeUpdate(raw, config);
     useNodeClusterUpdate(list, config, clusterMap);
     return {map, list};

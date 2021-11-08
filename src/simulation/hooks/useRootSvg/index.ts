@@ -7,7 +7,7 @@ import {svg_appendComponents} from '../../svg/modifiers/svg_appendComponents';
 import {svg_addZoomBehavior} from '../../svg/modifiers/svg_addZoomBehavior';
 import {Components, SimRootParams} from './types';
 import {useUpdateWhenDataChanges} from './hooks/useUpdateWhenDataChanges';
-import {useLocalStorage} from '../../../util/hooks/useLocalStorage';
+import {useLocalStorage} from '../../../hooks/util/useLocalStorage';
 import {ZoomTransform} from 'd3-zoom';
 
 

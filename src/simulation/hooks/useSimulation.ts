@@ -57,7 +57,7 @@ export function useSimulation(
           }          = simulationParameters;
     const key        = useMemo(() => { return Date.now(); },
                                // eslint-disable-next-line
-                               [...Object.values(data)]);
+                               [...Object.values(data), ...forces?.forces ?? []]);
     const root       = useRootSvg<SimulationElement<any>[]>({viewBox, data, components}, key);
     const simulation = useSimulationLifecycle(root, forces, data, key);
     useEffect(() => { simulation?.alphaTarget(.2).restart(); }, [forces, simulation, viewBox])

@@ -8,7 +8,7 @@ import {center} from '../../../../simulation/forces/options/center';
 import {internal} from '../../../../simulation/forces/options/internal';
 import {collision} from '../../../../simulation/forces/options/collision';
 import {bounding} from '../../../../simulation/forces/options/bounding';
-import {useDebounce} from '../../../../util/hooks/useDebounce';
+import {useDebounce} from '../../../../hooks/util/useDebounce';
 
 export function useConfiguredForces(config: VizConfigState) {
     const forces: ForceConfiguration = useMemo(() => ({forces: [], options: {}}), []);

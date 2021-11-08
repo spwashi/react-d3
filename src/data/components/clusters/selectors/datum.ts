@@ -3,7 +3,13 @@ import {NodeDatum} from '../../nodes/types/types';
 
 export const cluster_selectX      = (d: ClusterDatum | undefined) => !isNaN(d?.fx ?? d?.x ?? 10) ? d?.fx ?? d?.x ?? 10 : 10;
 export const cluster_selectY      = (d: ClusterDatum | undefined) => !isNaN(d?.fy ?? d?.y ?? 10) ? d?.fy ?? d?.y ?? 10 : 10;
-export const cluster_selectRadius = (d: ClusterDatum | undefined) => !isNaN(d?.r ?? 10) ? Math.max((d?.r ?? 1) * Math.abs((d?.forces?.electronegativity ?? -1)), 50) : 10;
+export const cluster_selectRadius = (d: ClusterDatum | undefined) => !isNaN(d?.r ?? 10) ? Math.max(
+    400,
+    Math.max(
+        4000,
+        (d?.r ?? 1),
+    ) * Math.abs((d?.forces?.electronegativity ?? -1)),
+) : 100;
 export const cluster_selectFill   = (d: ClusterDatum | undefined) => {
     const e = d?.forces?.electronegativity ?? 0;
     return 'rgba(' + (e >= 0 ? '0,0,0' : '255,255,255') + ',' + Math.abs(e / 10) + ')';
@@ -16,8 +22,8 @@ export const cluster_correctNode  =
                      if (!cluster) return;
 
                      cluster.r = cluster.r ?? 0;
-                     cluster.x = cluster.x ?? 0;
-                     cluster.y = cluster.y ?? 0;
+                     cluster.x = cluster.fx ?? 0;
+                     cluster.y = cluster.fy ?? 0;
 
                      const diffX = (cluster.x ?? 0) - d.x;
                      const diffY = (cluster.y ?? 0) - d.y;
@@ -29,22 +35,20 @@ export const cluster_correctNode  =
 
                      const multiplier = 10;
                      if (chargeSign < 0) {
+                         const m = -charge * multiplier;
                          if (Math.abs(diffX) > Math.abs(maxDist)) {
-                             const curr = d.x;
-                             d.x        = curr + (diffX / maxDist) * -charge * multiplier
+                             d.x = d.x + (diffX / maxDist) * m;
                          }
                          if (Math.abs(diffY) > Math.abs(maxDist)) {
-                             const curr = d.y;
-                             d.y        = curr + (diffY / maxDist) * -charge * multiplier;
+                             d.y = d.y + (diffY / maxDist) * m;
                          }
                      } else {
+                         const m = -charge * multiplier;
                          if (Math.abs(diffX) < Math.abs(maxDist)) {
-                             const curr = d.x;
-                             d.x        = curr - (diffX / maxDist) * -charge * multiplier;
+                             d.x = d.x - (diffX / maxDist) * m
                          }
                          if (Math.abs(diffY) < Math.abs(maxDist)) {
-                             const curr = d.y;
-                             d.y        = curr - (diffY / maxDist) * -charge * multiplier;
+                             d.y = d.y - (diffY / maxDist) * m;
                          }
                      }
                  };

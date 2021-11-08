@@ -96,7 +96,7 @@ export function RangeInputControl(props: { title?: string; min?: number; max?: n
                        min={min}
                        max={max}
                        step={step}
-                       value={value || ''}
+                       value={value ?? ''}
                        onChange={e => setValue(+e.target.value)}/>
                 <button onClick={() => setExpanded(!expanded)}>{expanded ? '-' : '+'}</button>
             </div>

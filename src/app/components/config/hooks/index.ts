@@ -2,7 +2,7 @@ import {VizConfigItem, VizConfigState} from '../config/types';
 import {ViewBox} from '../../../../types/simulation/visualization';
 import {useEffect, useMemo} from 'react';
 import {readConfig} from '../util/read';
-import {useLocalStorage} from '../../../../util/hooks/useLocalStorage';
+import {useLocalStorage} from '../../../../hooks/util/useLocalStorage';
 import {merge} from 'lodash';
 
 export function useConfiguredViewBox(config: VizConfigState) {

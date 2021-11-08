@@ -17,13 +17,13 @@ export const defaultConfig =
 
                      velocityDecay: {type: 'range', min: -1000, max: 1000, step: .1, defaultState: 0},
                      // Node Properties
-                     n:               {type: 'range', min: 20, max: 1000, step: 1, defaultState: 75},
-                     radius:          {type: 'range', min: -2, max: 1000, step: .1, defaultState: 75},
+                     n:               {type: 'range', min: 1, max: 1000, step: 1, defaultState: 75},
+                     radius:          {type: 'range', min: 0, max: 1000, step: .1, defaultState: 75},
                      useNodeStrength: {type: 'toggle', defaultState: false},
                      nodeStrength:    {type: 'range', min: -10000, max: 10000, step: .5, defaultState: 0},
 
                      // Node Properties
-                     clusterN:      {type: 'range', min: 0, max: 100, step: .5, defaultState: 5},
+                     clusterN:      {type: 'range', min: 0, max: 100, step: .1, defaultState: 5},
                      clusterRadius: {type: 'range', min: -2, max: 1000, step: .1, defaultState: 75},
 
                      // Edge Properties

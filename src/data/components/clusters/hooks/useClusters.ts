@@ -2,9 +2,9 @@ import {VizConfigState} from '../../../../app/components/config/config/types';
 import {useCallback, useEffect, useState} from 'react';
 import {ClusterDatum} from '../types/types';
 import {readConfig} from '../../../../app/components/config/util/read';
-import {useDebounce} from '../../../../util/hooks/useDebounce';
+import {useDebounce} from '../../../../hooks/util/useDebounce';
 import {cluster_init} from '../datum/init';
-import {useLocalStorage} from '../../../../util/hooks/useLocalStorage';
+import {useLocalStorage} from '../../../../hooks/util/useLocalStorage';
 import _ from 'lodash';
 
 function useClusterUpdate(raw: ClusterDatum[], config: VizConfigState) {
@@ -41,11 +41,14 @@ function useClusterUpdate(raw: ClusterDatum[], config: VizConfigState) {
                       cluster.dragBehavior.drag    = (event, d) => {
                           const x = d._fx ?? event.x;
                           const y = d._fy ?? event.y;
-
-                          d.x = d.fx = x;
-                          d.y = d.fy = y;
+                          d.x     = d.fx = x;
+                          d.y     = d.fy = y;
                       }
                       cluster.dragBehavior.release = (event, d) => {
+                          if (event.sourceEvent.shiftKey) {
+                              d.fx = undefined;
+                              return;
+                          }
                           setSaved({
                                        ...saved,
                                        [d.id ?? '']: {
