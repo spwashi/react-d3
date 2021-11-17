@@ -3,11 +3,12 @@ import {EdgeDatum} from '../types/types';
 import {useEffect, useMemo} from 'react';
 import {VizConfigState} from '../../../../app/components/config/config/types';
 import {readConfig} from '../../../../app/components/config/util/read';
+import {DataController} from '../../nodes/hooks/useDatumQuantityStabilizer';
 
-export function useEdges(config: VizConfigState, {map}: { map: Map<any, NodeDatum> }) {
+export function useEdges(config: VizConfigState, nodes: DataController<NodeDatum>) {
     const list: EdgeDatum[] = useMemo(
         () => {
-            const n     = map.size;
+            const n     = nodes.map.size;
             const edges =
                       Array.from(Array(n))
                            .flatMap((i, k) => [
@@ -19,7 +20,7 @@ export function useEdges(config: VizConfigState, {map}: { map: Map<any, NodeDatu
             function completeNode(edge: EdgeDatum & { width?: number }) {
                 edge.source = typeof edge.source !== 'object' ? (edge.source) : edge.source;
                 edge.target = typeof edge.target !== 'object' ? (edge.target) : edge.target;
-                if (!map.get(edge.source) || !map.get(edge.target)) return false;
+                if (!nodes.map.get(edge.source) || !nodes.map.get(edge.target)) return false;
 
                 edge.strength = edge.strength ?? Math.random();
                 return edge;
@@ -29,7 +30,7 @@ export function useEdges(config: VizConfigState, {map}: { map: Map<any, NodeDatu
                 .map(completeNode)
                 .filter(Boolean) as EdgeDatum[];
         },
-        [map],
+        [nodes.items],
     );
 
     useEffect(() => {
@@ -37,5 +38,5 @@ export function useEdges(config: VizConfigState, {map}: { map: Map<any, NodeDatu
             .map((edge) => edge.width = readConfig(config.edgeWidth, 1))
     }, [config.edgeWidth, list]);
 
-    return {list}
+    return {items: list}
 }

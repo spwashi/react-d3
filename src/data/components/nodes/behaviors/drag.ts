@@ -9,8 +9,8 @@ export function addDragBehavior(selection: Selection<BaseType, any, BaseType, an
                       const drag = d?.dragBehavior?.drag;
                       if (drag) return drag(event, d);
 
-                      const x = d._fx ?? event.x;
-                      const y = d._fy ?? event.y;
+                      const x = event.x;
+                      const y = event.y;
 
                       d.fx = x;
                       d.fy = y;

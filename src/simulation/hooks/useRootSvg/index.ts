@@ -13,7 +13,6 @@ import {ZoomTransform} from 'd3-zoom';
 
 export function useRootSvg<ComponentManagers extends Components>(
     params: SimRootParams<ComponentManagers>,
-    key: any,
 ): SimulationRoot<ComponentManagers> {
     const {viewBox, data, components} = params;
 
@@ -31,16 +30,14 @@ export function useRootSvg<ComponentManagers extends Components>(
                               .attr('overflow', 'visible');
                           svg_appendCenterMark(svg, viewBox);
                           svg_appendComponents(svg, components);
-                          svg_addZoomBehavior(svg,  transform, setTransform);
+                          svg_addZoomBehavior(svg, transform, setTransform);
                           return svg;
                       },
                       // eslint-disable-next-line
                       [viewBox, components]);
-    useEffect(() => {
-        updateTransform(svg);
-    }, [updateTransform, svg])
+    useEffect(() => updateTransform(svg), [updateTransform, svg])
 
-    useUpdateWhenDataChanges(svg, components, data, key);
+    useUpdateWhenDataChanges(svg, components, data);
 
     return useMemo(() => ({svg, components}), [svg, components])
 }

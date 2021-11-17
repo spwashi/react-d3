@@ -15,15 +15,18 @@ export function initSimulation(
     {config, data, tick}: Params,
 ) {
     if (!config) return;
+    simulation.stop();
     simulation.nodes(data.nodes ?? []);
-    return config
+    simulation = config
         .forces
         .reduce(
             (simulation, force) =>
                 force({config, data, simulation}),
             simulation,
-        ).alphaDecay(0)
-        .on('tick', tick)
-        .alphaTarget(.9)
-        .restart();
+        )
+        .on('tick', tick);
+
+    simulation.restart();
+
+    return simulation;
 }

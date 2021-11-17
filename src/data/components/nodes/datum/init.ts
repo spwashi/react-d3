@@ -1,10 +1,8 @@
 import {NodeDatum} from '../types/types';
-import {interpolateBlues} from 'd3';
 import {cluster_correctNode} from '../../clusters/selectors/datum';
 
-export function node_init(id: number): NodeDatum {
-    return {
-        id,
+export function node_init(other: Partial<NodeDatum>): NodeDatum {
+    const node: NodeDatum = {
         dragBehavior: {savePos: true},
         forces:       {
             inclination(d) {
@@ -15,8 +13,5 @@ export function node_init(id: number): NodeDatum {
             },
         },
     };
-}
-
-export function node_colorInit(node: NodeDatum, interpolator = interpolateBlues) {
-    return interpolator(1 - ((node.k ?? 0) / (node.NODE_COUNT ?? 1))) ?? '#ffffff'
+    return Object.assign(node, other);
 }

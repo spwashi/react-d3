@@ -16,7 +16,6 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (t: T) => 
     useEffect(() => setStoredValue(getKey(key, initialValue)), [key])
 
     const setValue = useCallback((value: Function | T) => {
-        console.log('setting -- ' + key)
         try {
             const valueToStore =
                       typeof value === 'function'

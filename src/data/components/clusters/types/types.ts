@@ -23,7 +23,10 @@ export type ClusterDatum =
         color?: string;
         stroke?: string;
 
+        // active radius
         r?: Radius,
+        // radius multiplier
+        _r?: Radius,
         x?: X,
         y?: Y,
 
@@ -35,10 +38,6 @@ export type ClusterDatum =
         vx?: X,
         vy?: Y,
 
-        _fx?: X,
-        _fy?: Y,
-
-
         id?: Id,
 
         description?: { title?: string },
@@ -48,6 +47,6 @@ export type ClusterDatum =
 
         reset?: () => void;
         click?: (event?: MouseEvent | any) => void;
-
+        save?: (d: ClusterDatum) => void;
         [k: string]: any;
     };

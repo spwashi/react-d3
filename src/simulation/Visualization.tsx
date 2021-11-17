@@ -1,27 +1,42 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {ViewBox} from '../types/simulation/visualization';
 import {useSimulation} from './hooks/useSimulation';
 import {SimulationElement} from '../types/simulation';
-import {ForceConfiguration} from './forces/types';
 import {SimulationData} from '../data/types';
+import {useConfiguredViewBox} from '../app/components/config/hooks';
+import {useForceInitialization} from '../app/components/config/hooks/useForceInitialization';
+import {VizConfigState} from '../app/components/config/config/types';
 
 type VizParams = {
     data: SimulationData,
     components: SimulationElement<any>[]
     className?: string,
-    forces?: ForceConfiguration;
-    viewBox: ViewBox;
+    config: VizConfigState;
     appName?: string;
 };
 
-export const Visualization =
-                 ({data, forces, className, components, viewBox, appName='viz'}: VizParams) => {
-                     const ref: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
+function useMountSvg(svg: SVGElement | null) {
+    const ref: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
+    useEffect(() => {
+                  const div = ref.current;
+                  if (!div || !svg) return;
 
-                     const {svg, simulation} = useSimulation({data, forces, components, viewBox});
+                  div.appendChild(svg);
+                  return () => {
+                      div.removeChild(svg)
+                      svg.remove();
+                  }
+              },
+              [svg]);
+    return ref;
+}
+export const Visualization =
+                 ({data, config, className, components, appName = 'viz'}: VizParams) => {
+                     const viewBox           = useConfiguredViewBox(config);
+                     const forceConfig       = useForceInitialization(config);
+                     const {svg, simulation} = useSimulation({data, forceConfig: forceConfig, components, viewBox});
 
                      useEffect(() => {
-                         const top          = window as any;
+                         const top               = window as any;
                          top[appName]            = top[appName] ?? {};
                          top[appName].simulation = simulation;
                          return () => {
@@ -29,18 +44,7 @@ export const Visualization =
                          };
                      }, [simulation]);
 
-                     useEffect(() => {
-                                   const div = ref.current;
-                                   if (!div || !svg) return;
-
-                                   div.appendChild(svg);
-                                   return () => {
-                                       div.removeChild(svg)
-                                       svg.remove();
-                                   }
-                               },
-                               [svg]);
-
+                     const ref   = useMountSvg(svg);
                      const style = useMemo(() => ({
                          display:        'flex',
                          alignItems:     'center',

@@ -3,13 +3,7 @@ import {NodeDatum} from '../../nodes/types/types';
 
 export const cluster_selectX      = (d: ClusterDatum | undefined) => !isNaN(d?.fx ?? d?.x ?? 10) ? d?.fx ?? d?.x ?? 10 : 10;
 export const cluster_selectY      = (d: ClusterDatum | undefined) => !isNaN(d?.fy ?? d?.y ?? 10) ? d?.fy ?? d?.y ?? 10 : 10;
-export const cluster_selectRadius = (d: ClusterDatum | undefined) => !isNaN(d?.r ?? 10) ? Math.max(
-    400,
-    Math.max(
-        4000,
-        (d?.r ?? 1),
-    ) * Math.abs((d?.forces?.electronegativity ?? -1)),
-) : 100;
+export const cluster_selectRadius = (d: ClusterDatum | undefined) => !isNaN(d?.r ?? 10) ? d?.r ?? 1 : 10;
 export const cluster_selectFill   = (d: ClusterDatum | undefined) => {
     const e = d?.forces?.electronegativity ?? 0;
     return 'rgba(' + (e >= 0 ? '0,0,0' : '255,255,255') + ',' + Math.abs(e / 10) + ')';
